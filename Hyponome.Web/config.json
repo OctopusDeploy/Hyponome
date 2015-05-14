@@ -1,0 +1,14 @@
+{
+	"AppSettings": {
+		"SiteTitle": "Hyponome"
+	},
+	"Github": {
+		"GithubOAuthApp": "Hyponome",
+		"GithubOrganization": "OctopusDeploy",
+		"GithubRepository": "Library",
+		"GithubOAuthClientId": "#{GithubOAuthClientId}",
+		"GithubOAuthClientSecret": "#{GithubOAuthClientSecret}",
+		"GithubOAuthRedirectUri": "#{GithubOAuthRedirectUri}",
+		"GithubOAuthScope": "user,repo,read:org"
+	}
+}

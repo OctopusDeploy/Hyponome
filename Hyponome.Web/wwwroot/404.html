@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>404</title>
+
+        <environment names="Development">
+            <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css" />
+            <link rel="stylesheet" href="lib/fontawesome/css/font-awesome.css"/>
+            <link rel="stylesheet" href="css/site.css" />
+        </environment>
+        <environment names="Staging,Production">
+            <link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/bootstrap/3.0.0/css/bootstrap.min.css"
+                  asp-fallback-href="lib/bootstrap/css/bootstrap.min.css"
+                  asp-fallback-test-class="hidden" asp-fallback-test-property="visibility" asp-fallback-test-value="hidden" />
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+                  asp-fallback-href="lib/fontawesome/css/font-awesome.min.css"
+                  asp-fallback-test-class="fa" asp-fallback-test-property="display" asp-fallback-test-value="inline-block" />
+            <link rel="stylesheet" href="css/site.css" />
+        </environment>
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/">Hyponome</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="container-fluid">
+            <h1>Uhoh, 404!</h1>
+        </div>
+
+        <environment names="Development">
+            <script src="lib/jquery/jquery.js"></script>
+            <script src="lib/bootstrap/js/bootstrap.js"></script>
+        </environment>
+        <environment names="Staging,Production">
+            <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-1.10.2.min.js"
+                    asp-fallback-src="lib/jquery/jquery.min.js"
+                    asp-fallback-test="window.jQuery">
+            </script>
+            <script src="//ajax.aspnetcdn.com/ajax/bootstrap/3.0.0/bootstrap.min.js"
+                    asp-fallback-src="lib/bootstrap/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery">
+            </script>
+        </environment>
+    </body>
+</html>

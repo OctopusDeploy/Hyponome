@@ -1,0 +1,17 @@
+{
+  "name": "hyponome",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "authors": [
+    "alfhenrik <henrik.a.andersson@outlook.com>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "rimraf": "^2.3.3"
+  }
+}

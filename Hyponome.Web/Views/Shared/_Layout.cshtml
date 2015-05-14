@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Hyponome | by OctopusDeploy</title>
+
+        <environment names="Development">
+            <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css" />
+            <link rel="stylesheet" href="/lib/fontawesome/css/font-awesome.css"/>
+        </environment>
+        <environment names="Staging,Production">
+            <link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/bootstrap/3.0.0/css/bootstrap.min.css"
+                  asp-fallback-href="/lib/bootstrap/css/bootstrap.min.css"
+                  asp-fallback-test-class="hidden" asp-fallback-test-property="visibility" asp-fallback-test-value="hidden" />
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+                  asp-fallback-href="/lib/fontawesome/css/font-awesome.min.css"
+                  asp-fallback-test-class="fa" asp-fallback-test-property="display" asp-fallback-test-value="inline-block" />
+            <link href="https://assets-cdn.github.com/assets/github-c486157afcc5f58155a921bc675afb08733fbaa8dcf39ac2104d381dd9c82ac2.css" media="all" rel="stylesheet">
+            <link href="https://assets-cdn.github.com/assets/github2-da2e842cc3f0aaf33b727d0ef034243c12ab008fd09b24868b97719683b40ee7.css" media="all" rel="stylesheet">    
+        </environment>
+        <link rel="stylesheet" href="/css/ace-diff.css" />
+        <link rel="stylesheet" href="/css/site.css" />
+        @RenderSection("styles", required: false)
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                    @if(@Context.User == null || string.IsNullOrEmpty(@Context.User.Identity.Name))
+                    {
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="/" title="Hyponome">Hyponome</a>
+                        </div>
+                        <div class="navbar-text navbar-right">
+                            <a href="@Url.Action("Login", "Account")" class="btn navbar-btn">Sign in</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="/" title="Hyponome"><span class="mega-octicon octicon-git-pull-request"></span> OctopusDeploy/Library</a>
+                        </div>
+                        <div class="header header-logged-in true">
+                            <ul class="header-nav user-nav right">
+                                <li class="header-nav-item">
+                                    <a class="header-nav-link name" href="@Context.User.FindFirst("urn:github:url").Value" target="_blank">
+                                        <img alt="@("@" + @Context.User.Identity.Name)" class="avatar" height="20" width="20" src="@Context.User.FindFirst("urn:github:avatar").Value"/>
+                                        <span class="css-truncate">
+                                            <span class="css-truncate-target">
+                                                @Context.User.Identity.Name
+                                            </span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="header-nav-item">
+                                    <a class="header-nav-link" href="@Url.Action("Logout", "Account")">
+                                        <span class="octicon octicon-sign-out"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </nav>
+        </header>
+        <div class="container">
+    		@if(@TempData["Error"] != null)
+    		{
+                <div class="alert alert-danger">
+    				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    				<span style="white-space: pre-line">@TempData["Error"]</span>
+    			</div>
+    		}
+            @if(@TempData["Success"] != null)
+            {
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <span style="white-space: pre-line">@TempData["Success"]</span>
+                </div>
+            }
+        </div>
+        @RenderBody()
+
+        <environment names="Development">
+            <script src="/lib/jquery/jquery.js"></script>
+            <script src="/lib/bootstrap/js/bootstrap.js"></script>
+            <script src="/lib/ace/ace.js"></script>
+            <script src="/lib/momentjs/moment.js"></script>
+        </environment>
+        <environment names="Staging,Production">
+            <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-1.10.2.min.js"
+                    asp-fallback-src="lib/jquery/jquery.min.js"
+                    asp-fallback-test="window.jQuery">
+            </script>
+            <script src="//ajax.aspnetcdn.com/ajax/bootstrap/3.0.0/bootstrap.min.js"
+                    asp-fallback-src="lib/bootstrap/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery">
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js"
+                    asp-fallback-src="lib/ace/ace.js"
+                    asp-fallback-test="ace">
+            </script>
+            <script src="/lib/momentjs/min/moment.min.js"></script>
+        </environment>
+        <script src="/scripts/diff_match_patch_uncompressed.js"></script>
+        <script src="/scripts/ace-diff.js"></script>
+        <script src="/scripts/hyponome.js"></script>
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
+        

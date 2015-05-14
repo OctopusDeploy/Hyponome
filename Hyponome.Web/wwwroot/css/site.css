@@ -1,0 +1,50 @@
+body {
+	padding-top: 60px;
+}
+
+.file-editor {
+	position: relative;
+	width: 100%;
+	min-height: 600px;
+	margin: 0 auto;
+}
+
+.navbar-brand .mega-octicon {
+	margin-top: -5px;
+}
+
+.header {
+	border: none;
+	min-width: initial;
+}
+
+.file-header .file-info .octicon {
+	color: #ccc;
+}
+
+.gh-header.pull.request {
+	margin-bottom: 10px;
+}
+
+.merge-pr {
+	width: 50%;
+	padding-top: 0;
+	margin: 0;
+	border-top: 0;
+}
+
+.merge-branch-heading {
+	font-weight: bold;
+}
+
+.merge-branch-action {
+	margin-top: -8px;
+}
+
+.validation-summary-errors ul {
+	list-style: none;
+}
+
+.navbar-text {
+	margin: 0;
+}

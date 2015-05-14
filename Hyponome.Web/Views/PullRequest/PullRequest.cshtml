@@ -1,0 +1,217 @@
+@model Octokit.PullRequest
+@{
+	Layout = "_Layout";
+}
+
+<div class="container-fluid">
+	<div class="repository-content">
+		<div class="issues-listing">
+			<div class="gh-header pull request">
+				<div class="gh-header-show">
+					<h1 class="gh-header-title">
+						<span class="js-issue-title">@Model.Title</span>
+						<span class="gh-header-number">#@Model.Number</span>
+					</h1>
+				</div>
+				<div class="flex-table gh-header-meta">
+					<div class="flex-table-item">
+						<div class="state state-open">
+							<span class="octicon octicon-git-pull-request"></span> Open
+						</div>
+					</div>
+					<div class="flex-table-item flex-table-item-primary">
+						<a href="@Model.User.HtmlUrl" class="author pull-header-username css-truncate css-truncate-target expandable">@Model.User.Login</a> 
+						wants to merge @Model.Commits commits into 
+						<span class="commit-ref current-branch css-truncate expandable">
+							<span class="css-truncate-target user">@Model.Base.Label</span>
+						</span>
+						 from 
+						 <span class="commit-ref current-branch css-truncate expandable">
+							 <span class="css-truncate user">@Model.Head.Label</span>
+						 </span>
+					</div>
+				</div>
+				@if(@ViewBag.IsCollaborator)
+				{
+					<div class="merge-pr">
+						<div class="branch-action @(@ViewBag.IsMergeable ? "branch-action-state-clean" : "branch-action-state-dirty")">
+							<span class="mega-octicon octicon-git-pull-request branch-action-icon"></span>
+							<span class="mega-octicon octicon-git-merge branch-action-icon"></span>
+							<div class="branch-action-body">
+								<div class="merge-message">
+									<div>
+										<button class="btn @(@ViewBag.IsMergeable ? "btn-primary" : "") merge-branch-action" type="button" @(@ViewBag.IsMergeable ? "" : "disabled")>
+											<span class="octicon octicon-git-merge"></span>
+											Merge pull request
+										</button>
+										<h3 class="merge-branch-heading">
+											@if(@ViewBag.IsMergeable)
+											{
+												<text>
+													This pull request can be automatically merged.
+												</text>
+											}
+											else
+											{
+												<text>
+													We can't automatically merge this pull request.
+												</text>
+											}
+										</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+						<form action="/pull/@Model.Number/merge" method="post" class="merge-branch-form">
+							<input type="hidden" name="sha" value="@Model.Head.Sha"/>
+							<img alt="@("@" + @Context.User.Identity.Name)" class="commit-form-avatar" height="48" src="@Context.User.FindFirst("urn:github:avatar").Value"/>
+							<div class="commit-form">
+								<div class="merge-form-contents">
+									<h3 class="merge-branch-heading">
+										Merge pull request #@Model.Number from @Model.User.Login/@Model.Head.Ref
+									</h3>
+									<textarea name="message" id="merge_message_field" class="input-block input-contrast merge-commit-message">@Model.Title</textarea>
+									<div class="commit-form-actions">
+										<button type="submit" class="btn btn-primary">
+											<span class="octicon octicon-git-merge"></span>
+											Confirm merge
+										</button>
+										<button type="button" class="btn">Cancel</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				}
+			</div>
+			<div role="tabpanel">
+				<ul id="pr-tabs" class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#files" aria-controls="files" role="tab" data-toggle="tab"><span class="octicon octicon-diff"></span> Files changed <span class="badge">@Model.ChangedFiles</span></a></li>
+					<li role="presentation"><a href="#textdiff" aria-controls="textdiff" role="tab" data-toggle="tab"><span class="octicon octicon-unfold"></span> Script Diff</a></li>
+				</ul>
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="files">
+						<div class="view-pull-request clearfix">
+							<div class="files-bucket is-visible">
+								<div class="uncommentable">
+									<div class="details-collapse table-of-contents">
+										<div class="toc-diff-stats">
+											<span class="octicon octicon-diff"></span>
+											Showing 
+											<strong>@Model.ChangedFiles changed files</strong>
+											 with 
+											<strong>@Model.Additions additions</strong>
+											 and 
+											<strong>@Model.Deletions deletions</strong>.
+										</div>
+									</div>
+									<p class="dashboard-notice">
+										<span class="mega-octicon octicon-info"></span>
+											To review the script of a new step template select the 'Octopus.Action.Script.ScriptBody' line, or to review the script of a modified step template, select the two 'Octopus.Action.Script.ScriptBody' lines (-/+) and press Ctrl-D (Cmd-D)
+									</p>
+									<div class="diff-view">
+										@foreach(var file in @ViewBag.Files) {
+											<div class="file show-inline-notes">
+												<div class="file-header">
+													<div class="file-info">
+														<span class="octicon octicon-file-text"></span>
+														<span title="@file.FileName"> @file.FileName</span>
+													</div>
+												</div>
+												<div class="data highlight blow-wrapper">
+													<div id="editor_@file.Sha" class="file-editor">@file.Patch</div>
+												</div>
+											</div>
+										}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="textdiff">
+						<div id="view-text-diff" class="view-text-diff clearfix">
+							<div id="flex-container">
+								<div id="acediff-left-editor"></div>
+								<div id="acediff-gutter"></div>
+								<div id="acediff-right-editor"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<script>
+		var textDiffCommand = {
+			name: 'textDiffCommand',
+			bindKey: {win: 'Ctrl-D', mac: 'Command-D'},
+			exec: function(editor) {
+				var range = editor.getSelectionRange();
+				if(range.start.row === (range.end.row - 1)) {
+					var newText = editor.session.getLine(range.start.row);
+					var newScriptBody = JSON.parse("{" + newText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
+					
+					$("#acediff-left-editor").text(newScriptBody);
+					var editor = ace.edit("acediff-left-editor");
+					editor.getSession().setMode('ace/mode/powershell');
+					editor.setTheme('ace/theme/monokai');
+					editor.getSession().setUseWrapMode(false);
+					editor.setReadOnly(true);
+					editor.setOptions({ maxLines: Infinity });
+					$("#acediff-gutter").hide();
+					$("#acediff-right-editor").hide();
+				} else {
+					var	oldText = editor.session.getLine(range.start.row), 
+						newText = editor.session.getLine(range.end.row - 1);
+	
+					var oldScriptBody = JSON.parse("{" + oldText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
+					var newScriptBody = JSON.parse("{" + newText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
+	
+					var aceDiffer = new AceDiff({
+				        mode: "ace/mode/powershell",
+						theme: "ace/theme/monokai",
+						maxLines: Infinity,
+						showConnectors: true,
+				        left: {
+				            id: "acediff-left-editor",
+				            content: oldScriptBody.replace(/\r\n/g, "\n")
+				        },
+				        right: {
+				            id: "acediff-right-editor",
+				            content: newScriptBody.replace(/\r\n/g, "\n")
+				        },
+				        classes: {
+				            gutterID: "acediff-gutter"
+				        }
+				    });
+				}
+				
+				$("#pr-tabs a[href='#textdiff']").tab("show");
+			},
+			readOnly: true
+		};
+		$(document).ready(function () {
+			$('div[id^="editor_"]').each(function(index, item) {
+				var editor = ace.edit($(item).attr('id'));
+				editor.getSession().setMode('ace/mode/diff');
+				editor.setTheme('ace/theme/monokai');
+				editor.getSession().setUseWrapMode(false);
+				editor.setReadOnly(true);
+				editor.setOptions({ maxLines: Infinity });
+				editor.commands.addCommand(textDiffCommand);
+			});
+			
+			$('.merge-branch-action').click(function () {
+				$('.merge-pr').addClass('open');
+			});
+			
+			$('.commit-form-actions :button[type!="submit"]').click(function () {
+				$('.merge-pr').removeClass('open');
+			})
+		});
+	</script>
+
+}

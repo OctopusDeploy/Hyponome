@@ -1,0 +1,43 @@
+@model IReadOnlyList<Octokit.PullRequest>
+@{
+    Layout = "_Layout";
+}    
+<div class="container">
+    <div class="table-list-header">
+        <div class="table-list-filters">
+            <div class="table-list-header-toggle states left">
+                <a href="" class="btn-link selected">
+                    <span class="octicon octicon-git-pull-request"></span> @Model.Count Open pull requests
+                </a>
+            </div>
+        </div>
+    </div>
+    <ul class="table-list table-list-bordered table-list-issues">
+        @foreach(var pull in @Model)
+        {
+            <li id="issue_@pull.Number" class="read table-list-item">
+                <div class="table-list-cell table-list-cell-type">
+                    <span class="octicon octicon-git-pull-request open"></span>
+                </div>
+                <div class="table-list-cell issue-title">
+                    <a href="@Url.Action("PullRequest", "PullRequest", new { number = @pull.Number })" class="issue-title-link">@pull.Title</a>
+                    <div class="issue-meta">
+                        <span class="issue-meta-section opened-by">
+                            #@pull.Number opened <time datetime="@pull.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ssZ")" is="relative-time" title="@pull.CreatedAt.LocalDateTime.ToString("MMMM d, yyyy, hh:mm tt 'GMT'zz")"></time> by 
+                            <a href="@pull.User.HtmlUrl" class="tooltipped tooltipped-s muted-link" target="_blank">@pull.User.Login</a>
+                        </span>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.issue-meta-section time').each(function(index, elem) {
+                $(elem).html(moment($(elem).attr('datetime')).fromNow());
+            });
+        });
+    </script>
+}
