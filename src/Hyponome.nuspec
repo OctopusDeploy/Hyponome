@@ -9,6 +9,6 @@
     <licenseUrl>http://github.com/OctopusDeploy/Hyponome/license.md</licenseUrl>
   </metadata>
   <files>
-  	<file src="**\*.*" target="" exclude="**\bower_components\**\*.*;**\node_modules\**\*.*;**\typings\**\*.*"/>
+  	<file src="**\*.*" target="" exclude="**\bin\**\*.*;**\bower_components\**\*.*;**\node_modules\**\*.*;**\typings\**\*.*"/>
   </files>
 </package>
