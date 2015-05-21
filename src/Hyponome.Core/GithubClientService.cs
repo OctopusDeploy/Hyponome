@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.OptionsModel;
@@ -18,7 +19,7 @@ namespace Hyponome.Core
         Task<bool> IsCollaborator(string user);
         Task<IReadOnlyList<Organization>> GetOrganizations();
         Task<IReadOnlyList<Repository>> GetRepositories(string organization);
-        Task<IReadOnlyList<PullRequest>> GetPullRequests(string owner, string repo);
+        Task<List<Issue>> GetPullRequests(string owner, string repo);
         Task<PullRequest> GetPullRequest(string owner, string repo, int number);
         Task<IReadOnlyList<PullRequestFile>> GetPullRequestFiles(string owner, string repo, int number);
         Task<PullRequestMerge> MergePullRequest(string owner, string repo, int number, MergePullRequest request);
@@ -71,9 +72,11 @@ namespace Hyponome.Core
             return await githubClient.Repository.GetAllForOrg(organization);
         }
         
-        public async Task<IReadOnlyList<PullRequest>> GetPullRequests(string owner, string repo)
+        public async Task<List<Issue>> GetPullRequests(string owner, string repo)
         {
-            return await githubClient.PullRequest.GetAllForRepository(owner, repo);
+            var issues = await githubClient.Issue.GetAllForRepository(owner, repo);
+            var pulls = issues.Where(i => i.PullRequest != null);
+            return pulls.ToList();
         }
         
         public async Task<PullRequest> GetPullRequest(string owner, string name, int number)

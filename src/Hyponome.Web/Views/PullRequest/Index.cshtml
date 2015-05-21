@@ -1,4 +1,4 @@
-@model IReadOnlyList<Octokit.PullRequest>
+@model List<Octokit.Issue>
 @{
     Layout = "_Layout";
 }    
@@ -7,7 +7,7 @@
         <div class="table-list-filters">
             <div class="table-list-header-toggle states left">
                 <a href="" class="btn-link selected">
-                    <span class="octicon octicon-git-pull-request"></span> @Model.Count Open pull requests
+                    <span class="octicon octicon-git-pull-request"></span> @Model.Count Open
                 </a>
             </div>
         </div>
@@ -26,6 +26,17 @@
                             #@pull.Number opened <time datetime="@pull.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ssZ")" is="relative-time" title="@pull.CreatedAt.LocalDateTime.ToString("MMMM d, yyyy, hh:mm tt 'GMT'zz")"></time> by 
                             <a href="@pull.User.HtmlUrl" class="tooltipped tooltipped-s muted-link" target="_blank">@pull.User.Login</a>
                         </span>
+                        @if(@pull.Milestone != null)
+                        {
+                            <span class="issue-meta-section css-truncate issue-milestone">
+                                <a class="milestone-link muted-link css-truncate tooltipped tooltipped-s" aria-label="View all issues in this milestone" href="/milestones/vNext">
+                                    <span class="octicon octicon-milestone"></span>
+                                    <span class="css-truncate-target">
+                                        @pull.Milestone.Title
+                                    </span>
+        	                    </a>
+                            </span>
+                        }
                     </div>
                 </div>
             </li>
