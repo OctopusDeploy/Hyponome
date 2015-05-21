@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>Hyponome</id>
+    <id>Hyponome.Web</id>
     <version>0.0.1</version>
     <authors>Octopus Deploy</authors>
     <description>The Octopus Deploy Library pull request review tool</description>
