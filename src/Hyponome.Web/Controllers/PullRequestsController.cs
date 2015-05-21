@@ -7,12 +7,12 @@ using Hyponome.Core;
 using Octokit;
 
 [RouteAttribute("")]
-public class PullRequestController : Controller
+public class PullRequestsController : Controller
 {
 	readonly IGithubClientService githubClientService;
 	readonly GithubOptions githubOptions;
 	
-	public PullRequestController(IGithubClientService githubClientService)
+	public PullRequestsController(IGithubClientService githubClientService)
 	{
 		this.githubClientService = githubClientService;
 		this.githubOptions = githubClientService.Options;
