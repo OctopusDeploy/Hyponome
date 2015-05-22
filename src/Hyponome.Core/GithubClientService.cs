@@ -23,6 +23,7 @@ namespace Hyponome.Core
         Task<PullRequest> GetPullRequest(string owner, string repo, int number);
         Task<IReadOnlyList<PullRequestFile>> GetPullRequestFiles(string owner, string repo, int number);
         Task<PullRequestMerge> MergePullRequest(string owner, string repo, int number, MergePullRequest request);
+        Task<IReadOnlyList<Milestone>> GetMilestones(string owner, string repo);
     }
     
     public class GithubClientService : IGithubClientService
@@ -93,6 +94,11 @@ namespace Hyponome.Core
         public async Task<PullRequestMerge> MergePullRequest(string owner, string repo, int number, MergePullRequest request)
         {
             return await githubClient.PullRequest.Merge(owner, repo, number, request);
+        }
+        
+        public async Task<IReadOnlyList<Milestone>> GetMilestones(string owner, string repo)
+        {
+            return await githubClient.Issue.Milestone.GetAllForRepository(owner, repo);
         }
     }
 }

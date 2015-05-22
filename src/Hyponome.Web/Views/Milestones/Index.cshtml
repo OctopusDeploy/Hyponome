@@ -1,0 +1,94 @@
+@model IReadOnlyList<Octokit.Milestone>
+@{
+	Layout = "_Layout";
+      var milestoneProgress = new Func<int, int, double>((open, closed) => {
+            var total = open + closed;
+            return System.Math.Round((((double)closed / (double)total) * 100), 2);
+      });
+}
+
+<div class="container">
+	@Html.Partial("_IssuesNav", "milestones")
+	<div class="table-list-header">
+		<div class="table-list-filters">
+			<div class="table-list-header-toggle states left">
+                <a href="" class="btn-link selected">
+					<span class="octicon octicon-milestone"></span>
+					@Model.Count Open
+				</a>
+			</div>
+		</div>
+	</div>
+	<ul class="table-list table-list-bordered table-list-milestones js-navigation-container js-active-navigation-container">
+      @foreach(var milestone in @Model)
+      {
+            var progress = @milestoneProgress(milestone.OpenIssues, milestone.ClosedIssues);
+            <div class="table-list-item milestone notdue">
+                  <div class="table-list-cell milestone-title">
+                        <h2 class="milestone-title-link">
+                              <a href="/milestones/vNext">@milestone.Title</a>
+                        </h2>
+                  
+                        <div class="milestone-meta">
+                              <span class="milestone-meta-item">
+                              @if(@milestone.DueOn.HasValue)
+                              {
+                                    @if(@milestone.DueOn.Value >= @DateTime.UtcNow)
+                                    {
+                                          <text>
+                                                <span class="octicon octicon-calendar"></span> 
+                                                Due by @milestone.DueOn.Value.LocalDateTime.ToString("MMM dd, yyyy")
+                                          </text>
+                                    }
+                                    else
+                                    {
+                                          <text>
+                                                <strong class="text-danger">
+                                                      <span class="octicon octicon-alert"></span> 
+                                                      Past due by <span class="due-on">@milestone.DueOn.Value.LocalDateTime.ToString("yyyy-MM-dd")</span>
+                                                </strong>
+                                          </text>
+                                    }
+                              }
+                              else
+                              {
+                                    <text>
+                                          No due date
+                                    </text>
+                              }
+                              </span>
+                  	</div>
+                  </div>
+                  
+                  <div class="table-list-cell milestone-progress">
+                        <span class="progress-bar"><span class="progress" style="width: @(@progress)%">&nbsp;</span></span>
+                        <div class="stats">
+                              <div class="stat">
+                                    <span class="progress-percent">@progress%</span>
+                                    <span class="stat-label">complete</span>
+                              </div>
+                              <div class="stat">
+                                    @milestone.OpenIssues
+                                    <span class="stat-label">open</span>
+                              </div>
+                              <div class="stat">
+                                    @milestone.ClosedIssues
+                                    <span class="stat-label">closed</span>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+          }
+    </ul>
+</div>
+
+@section scripts {
+      <script>
+            $(document).ready(function () {
+                  $('.milestone-meta-item .due-on').each(function (index, elem) {
+                        $elem = $(elem);
+                        $elem.html(moment($elem.html()).fromNow(true));
+                  });
+            });
+      </script>
+}

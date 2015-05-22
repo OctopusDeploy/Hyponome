@@ -27,20 +27,17 @@
         <header>
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/" title="Hyponome">Hyponome</a>
+                    </div>
                     @if(@Context.User == null || string.IsNullOrEmpty(@Context.User.Identity.Name))
                     {
-                        <div class="navbar-header">
-                            <a class="navbar-brand" href="/" title="Hyponome">Hyponome</a>
-                        </div>
                         <div class="navbar-text navbar-right">
                             <a href="@Url.Action("Login", "Account")" class="btn navbar-btn">Sign in</a>
                         </div>
                     }
                     else
                     {
-                        <div class="navbar-header">
-                            <a class="navbar-brand" href="/" title="Hyponome"><span class="mega-octicon octicon-git-pull-request"></span></a>
-                        </div>
                         <div class="header header-logged-in true">
                             <ul class="header-nav user-nav right">
                                 <li class="header-nav-item">

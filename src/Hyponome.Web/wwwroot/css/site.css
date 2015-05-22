@@ -48,3 +48,8 @@ body {
 .navbar-text {
 	margin: 0;
 }
+
+.progress-bar {
+	box-shadow: none;
+	width: 100%;
+}
