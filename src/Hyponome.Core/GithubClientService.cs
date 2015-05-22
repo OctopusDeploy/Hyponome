@@ -24,6 +24,8 @@ namespace Hyponome.Core
         Task<IReadOnlyList<PullRequestFile>> GetPullRequestFiles(string owner, string repo, int number);
         Task<PullRequestMerge> MergePullRequest(string owner, string repo, int number, MergePullRequest request);
         Task<IReadOnlyList<Milestone>> GetMilestones(string owner, string repo);
+        Task<Milestone> GetMilestone(string owner, string repo, string milestone);
+        Task<List<Issue>> GetIssuesInMilestone(string owner, string repo, string milestone);
     }
     
     public class GithubClientService : IGithubClientService
@@ -99,6 +101,27 @@ namespace Hyponome.Core
         public async Task<IReadOnlyList<Milestone>> GetMilestones(string owner, string repo)
         {
             return await githubClient.Issue.Milestone.GetAllForRepository(owner, repo);
+        }
+        
+        public async Task<Milestone> GetMilestone(string owner, string repo, string milestone)
+        {
+            var milestones = await GetMilestones(owner, repo);
+            var theMilestone = milestones.FirstOrDefault(m => m.Title == milestone);
+            return theMilestone;
+        }
+        
+        public async Task<List<Issue>> GetIssuesInMilestone(string owner, string repo, string milestone)
+        {
+            var issues = await githubClient.Issue.GetAllForRepository(
+                owner, 
+                repo, 
+                new RepositoryIssueRequest
+                {
+                    Milestone = milestone
+                }
+            );
+            var pulls = issues.Where(i => i.PullRequest != null);
+            return pulls.ToList();
         }
     }
 }

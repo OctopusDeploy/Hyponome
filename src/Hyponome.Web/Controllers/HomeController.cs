@@ -18,7 +18,7 @@ namespace Hyponome.Controllers
 		[RouteAttribute("")]
 		public ActionResult Index()
 		{
-			return RedirectToAction("Index", "PullRequest");
+			return RedirectToAction("Index", "PullRequests");
 		}
 	}
 }

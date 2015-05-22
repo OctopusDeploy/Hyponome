@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Hyponome | by OctopusDeploy</title>
-
+        <link rel="icon" type="image/png" href="/img/favicon.png">
         <environment names="Development">
             <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css" />
             <link rel="stylesheet" href="/lib/fontawesome/css/font-awesome.css"/>
@@ -28,7 +28,9 @@
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="/" title="Hyponome">Hyponome</a>
+                        <a class="navbar-brand" href="/" title="Hyponome">
+                            <img src="/img/hyponome.png" />
+                        </a>
                     </div>
                     @if(@Context.User == null || string.IsNullOrEmpty(@Context.User.Identity.Name))
                     {
@@ -89,6 +91,9 @@
         </div>
         @RenderBody()
 
+        <footer>
+            @Html.Partial("_Footer")
+        </footer>
         <environment names="Development">
             <script src="/lib/jquery/jquery.js"></script>
             <script src="/lib/bootstrap/js/bootstrap.js"></script>

@@ -45,6 +45,15 @@ body {
 	list-style: none;
 }
 
+.navbar-brand {
+	padding: 5px 10px;
+}
+
+.navbar-brand img {
+	height: 40px;
+	width: 40px;
+}
+
 .navbar-text {
 	margin: 0;
 }
@@ -52,4 +61,24 @@ body {
 .progress-bar {
 	box-shadow: none;
 	width: 100%;
+}
+
+footer {
+	margin-top: 10px;
+	padding: 10px 0;
+	background: #f2f2f2;
+	border: 1px solid #e5e5e5;
+	line-height: 30px;
+	color: #666;
+}
+
+.footer-logo {
+	width: 32px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.footer-logo img {
+	height: 30px;
+	text-align: center;
 }

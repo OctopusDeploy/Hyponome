@@ -1,5 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Session;
 using Hyponome.Core;
 
 [RouteAttribute("[controller]")]
@@ -21,9 +24,12 @@ public class MilestonesController : Controller
 		return View(milestones);
 	}
 	
-	[RouteAttribute("{milestone}")]
-	public async Task<ActionResult> GetMilestone(string milestone)
+	[RouteAttribute("{milestoneNumber}")]
+	public async Task<ActionResult> GetMilestone(string milestoneNumber)
 	{
-		return View();
+		var milestone = await githubClientService.GetMilestone(githubOptions.GithubOrganization, githubOptions.GithubRepository, milestoneNumber); 
+		var pulls = await githubClientService.GetIssuesInMilestone(githubOptions.GithubOrganization, githubOptions.GithubRepository, milestone.Number.ToString());
+		System.Console.WriteLine("Found {0} pull requests in {1}", pulls.Count, milestone);
+		return View("/Views/PullRequests/Index.cshtml", pulls);
 	}
 }
