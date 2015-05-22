@@ -21,7 +21,7 @@
                     <span class="octicon octicon-git-pull-request open"></span>
                 </div>
                 <div class="table-list-cell issue-title">
-                    <a href="@Url.Action("PullRequest", "PullRequest", new { number = @pull.Number })" class="issue-title-link">@pull.Title</a>
+                    <a href="@Url.Action("PullRequest", "PullRequests", new { number = @pull.Number })" class="issue-title-link">@pull.Title</a>
                     <div class="issue-meta">
                         <span class="issue-meta-section opened-by">
                             #@pull.Number opened <time datetime="@pull.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ssZ")" is="relative-time" title="@pull.CreatedAt.LocalDateTime.ToString("MMMM d, yyyy, hh:mm tt 'GMT'zz")"></time> by 
