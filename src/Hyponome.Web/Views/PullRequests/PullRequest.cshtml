@@ -145,6 +145,7 @@
 
 @section scripts {
 	<script>
+		var diffEditor;
 		var textDiffCommand = {
 			name: 'textDiffCommand',
 			bindKey: {win: 'Ctrl-D', mac: 'Command-D'},
@@ -154,15 +155,18 @@
 					var newText = editor.session.getLine(range.start.row);
 					var newScriptBody = JSON.parse("{" + newText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
 					
-					$("#acediff-left-editor").text(newScriptBody);
-					var editor = ace.edit("acediff-left-editor");
-					editor.getSession().setMode('ace/mode/powershell');
-					editor.setTheme('ace/theme/monokai');
-					editor.getSession().setUseWrapMode(false);
-					editor.setReadOnly(true);
-					editor.setOptions({ maxLines: Infinity });
-					$("#acediff-gutter").hide();
-					$("#acediff-right-editor").hide();
+					//$("#acediff-left-editor").text(newScriptBody);
+					if(!diffEditor) {
+						diffEditor = ace.edit("acediff-left-editor");
+						diffEditor.getSession().setMode('ace/mode/powershell');
+						diffEditor.setTheme('ace/theme/monokai');
+						diffEditor.getSession().setUseWrapMode(false);
+						diffEditor.setReadOnly(true);
+						diffEditor.setOptions({ maxLines: Infinity });
+						$("#acediff-gutter").hide();
+						$("#acediff-right-editor").hide();
+					}
+					diffEditor.getSession().setValue(newScriptBody);
 				} else {
 					var	oldText = editor.session.getLine(range.start.row), 
 						newText = editor.session.getLine(range.end.row - 1);
