@@ -87,7 +87,7 @@
 			<div role="tabpanel">
 				<ul id="pr-tabs" class="nav nav-tabs" role="tablist">
 					<li role="presentation" class="active"><a href="#files" aria-controls="files" role="tab" data-toggle="tab"><span class="octicon octicon-diff"></span> Files changed <span class="badge">@Model.ChangedFiles</span></a></li>
-					<li role="presentation"><a href="#textdiff" aria-controls="textdiff" role="tab" data-toggle="tab"><span class="octicon octicon-unfold"></span> Script Diff</a></li>
+					<li role="presentation"><a style="display:none" href="#textdiff" aria-controls="textdiff" role="tab" data-toggle="tab"><span class="octicon octicon-unfold"></span> Script</a></li>
 				</ul>
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane active" id="files">
@@ -193,6 +193,7 @@
 				    });
 				}
 				
+				$("#pr-tabs a[href='#textdiff']").show();
 				$("#pr-tabs a[href='#textdiff']").tab("show");
 			},
 			readOnly: true
