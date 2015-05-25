@@ -26,7 +26,7 @@
             <div class="table-list-item milestone notdue">
                   <div class="table-list-cell milestone-title">
                         <h2 class="milestone-title-link">
-                              <a href="/milestones/vNext">@milestone.Title</a>
+                              <a href="/milestones/@milestone.Title">@milestone.Title</a>
                         </h2>
                   
                         <div class="milestone-meta">
@@ -37,7 +37,7 @@
                                     {
                                           <text>
                                                 <span class="octicon octicon-calendar"></span> 
-                                                Due by @milestone.DueOn.Value.LocalDateTime.ToString("MMM dd, yyyy")
+                                                <span class="due-by">@milestone.DueOn.Value.LocalDateTime.ToString("R")</span>
                                           </text>
                                     }
                                     else
@@ -45,7 +45,7 @@
                                           <text>
                                                 <strong class="text-danger">
                                                       <span class="octicon octicon-alert"></span> 
-                                                      Past due by <span class="due-on">@milestone.DueOn.Value.LocalDateTime.ToString("yyyy-MM-dd")</span>
+                                                      Past due by over <span class="past-due">@milestone.DueOn.Value.ToString("yyyy-MM-dd")</span>
                                                 </strong>
                                           </text>
                                     }
@@ -85,7 +85,11 @@
 @section scripts {
       <script>
             $(document).ready(function () {
-                  $('.milestone-meta-item .due-on').each(function (index, elem) {
+                  $('.milestone-meta-item .due-by').each(function (index, elem) {
+                        $elem = $(elem);
+                        $elem.html(moment($elem.html()).local().format('[Due by] MMM DD, YYYY'));
+                  })
+                  $('.milestone-meta-item .past-due').each(function (index, elem) {
                         $elem = $(elem);
                         $elem.html(moment($elem.html()).fromNow(true));
                   });
