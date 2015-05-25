@@ -46,6 +46,12 @@
                         }
                     </div>
                 </div>
+                <div class="table-list-cell issue-comments">
+                    <a href="@Url.Action("PullRequest", "PullRequests", new { number = @pull.Number })" class="muted-link @(@pull.Comments == 0 ? "issue-comments-no-comment" : "")">
+                        <span class="octicon octicon-comment"></span>
+                        @pull.Comments
+                    </a>
+                </div>
             </li>
         }
     </ul>
