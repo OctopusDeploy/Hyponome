@@ -3,58 +3,68 @@
     Layout = "_Layout";
 }    
 <div class="container">
-    @Html.Partial("_IssuesNav", "pulls")
-    <div class="table-list-header">
-        <div class="table-list-filters">
-            <div class="table-list-header-toggle states left">
-                <a href="" class="btn-link selected">
-                    <span class="octicon octicon-git-pull-request"></span> @Model.Count Open
-                </a>
-            </div>
-        </div>
-    </div>
-    <ul class="table-list table-list-bordered table-list-issues">
-        @foreach(var pull in @Model)
-        {
-            <li id="issue_@pull.Number" class="read table-list-item">
-                <div class="table-list-cell table-list-cell-type">
-                    <span class="octicon octicon-git-pull-request open"></span>
-                </div>
-                <div class="table-list-cell issue-title">
-                    <a href="@Url.Action("PullRequest", "PullRequests", new { number = @pull.Number })" class="issue-title-link">@pull.Title</a>
-                    <span class="labels">
-                        @foreach(var label in @pull.Labels)
-                        {
-                            <a href="" class="label labelstyle-@(@label.Color) linked-labelstyle-@(@label.Color)" style="background-color: #@(@label.Color); color: #222;">@label.Name</a>
-                        }
-                    </span>
-                    <div class="issue-meta">
-                        <span class="issue-meta-section opened-by">
-                            #@pull.Number opened <time datetime="@pull.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ssZ")" is="relative-time" title="@pull.CreatedAt.LocalDateTime.ToString("MMMM d, yyyy, hh:mm tt 'GMT'zz")"></time> by 
-                            <a href="@pull.User.HtmlUrl" class="muted-link" target="_blank">@pull.User.Login</a>
-                        </span>
-                        @if(@pull.Milestone != null)
-                        {
-                            <span class="issue-meta-section css-truncate issue-milestone">
-                                <a class="milestone-link muted-link css-truncate tooltipped tooltipped-s" aria-label="View all issues in this milestone" href="/milestones/@pull.Milestone.Title">
-                                    <span class="octicon octicon-milestone"></span>
-                                    <span class="css-truncate-target">
-                                        @pull.Milestone.Title
-                                    </span>
-        	                    </a>
-                            </span>
-                        }
-                    </div>
-                </div>
-                <div class="table-list-cell issue-comments">
-                    <a href="@Url.Action("PullRequest", "PullRequests", new { number = @pull.Number })" class="muted-link @(@pull.Comments == 0 ? "issue-comments-no-comment" : "")">
-                        <span class="octicon octicon-comment"></span>
-                        @pull.Comments
+    <div class="issues-listing">
+        @Html.Partial("_IssuesNav", "pulls")
+        <div class="table-list-header">
+            <div class="table-list-filters">
+                <div class="table-list-header-toggle states left">
+                    <a href="" class="btn-link selected">
+                        <span class="octicon octicon-git-pull-request"></span> @Model.Count Open
                     </a>
                 </div>
-            </li>
-        }
-    </ul>
+            </div>
+        </div>
+        <ul class="table-list table-list-bordered table-list-issues">
+            @foreach(var pull in @Model)
+            {
+                <li id="issue_@pull.Number" class="read table-list-item">
+                    <div class="table-list-cell table-list-cell-type">
+                        <span class="octicon octicon-git-pull-request open"></span>
+                    </div>
+                    <div class="table-list-cell issue-title">
+                        <a href="@Url.Action("PullRequest", "PullRequests", new { number = @pull.Number })" class="issue-title-link">@pull.Title</a>
+                        <span class="labels">
+                            @foreach(var label in @pull.Labels)
+                            {
+                                <a href="" class="label labelstyle-@(@label.Color) linked-labelstyle-@(@label.Color)" style="background-color: #@(@label.Color); color: #222;">@label.Name</a>
+                            }
+                        </span>
+                        <div class="issue-meta">
+                            <span class="issue-meta-section opened-by">
+                                #@pull.Number opened <time datetime="@pull.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ssZ")" is="relative-time" title="@pull.CreatedAt.LocalDateTime.ToString("MMMM d, yyyy, hh:mm tt 'GMT'zz")"></time> by 
+                                <a href="@pull.User.HtmlUrl" class="muted-link" target="_blank">@pull.User.Login</a>
+                            </span>
+                            @if(@pull.Milestone != null)
+                            {
+                                <span class="issue-meta-section css-truncate issue-milestone">
+                                    <a class="milestone-link muted-link css-truncate tooltipped tooltipped-s" aria-label="View all issues in this milestone" href="/milestones/@pull.Milestone.Title">
+                                        <span class="octicon octicon-milestone"></span>
+                                        <span class="css-truncate-target">
+                                            @pull.Milestone.Title
+                                        </span>
+            	                    </a>
+                                </span>
+                            }
+                        </div>
+                    </div>
+                        <div class="table-list-cell table-list-cell-avatar">
+                    @if(@pull.Assignee != null)
+                    {
+                        <a>
+                            <img alt="@("@" + @pull.Assignee.Login)" height="16" src="@(@pull.Assignee.AvatarUrl)?v=3&amp;s=32" width="16">
+                        </a>
+                    }
+                        </div>
+                    <div class="table-list-cell issue-comments">
+                        <a href="@Url.Action("PullRequest", "PullRequests", new { number = @pull.Number })" class="muted-link @(@pull.Comments == 0 ? "issue-comments-no-comment" : "")">
+                            <span class="octicon octicon-comment"></span>
+                            @pull.Comments
+                        </a>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
 </div>
 @section scripts {
     <script>
