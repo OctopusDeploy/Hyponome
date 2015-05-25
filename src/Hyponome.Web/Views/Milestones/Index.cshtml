@@ -3,7 +3,7 @@
 	Layout = "_Layout";
       var milestoneProgress = new Func<int, int, double>((open, closed) => {
             var total = open + closed;
-            return System.Math.Round((((double)closed / (double)total) * 100), 2);
+            return System.Math.Round((((double)closed / (double)total) * 100), 0);
       });
 }
 
