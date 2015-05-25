@@ -22,6 +22,12 @@
                 </div>
                 <div class="table-list-cell issue-title">
                     <a href="@Url.Action("PullRequest", "PullRequests", new { number = @pull.Number })" class="issue-title-link">@pull.Title</a>
+                    <span class="labels">
+                        @foreach(var label in @pull.Labels)
+                        {
+                            <a href="" aria-label="View all @(@label.Name) issues" class="label labelstyle-@(@label.Color) linked-labelstyle-@(@label.Color) tooltipped tooltipped-n" style="background-color: #@(@label.Color); color: #222;">@label.Name</a>
+                        }
+                    </span>
                     <div class="issue-meta">
                         <span class="issue-meta-section opened-by">
                             #@pull.Number opened <time datetime="@pull.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ssZ")" is="relative-time" title="@pull.CreatedAt.LocalDateTime.ToString("MMMM d, yyyy, hh:mm tt 'GMT'zz")"></time> by 
