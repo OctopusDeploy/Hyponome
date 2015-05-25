@@ -45,7 +45,11 @@
     "**.xproj",
     "**.user",
     "**.vspscc",
-    "typings"
+    "typings",
+    "bower.json",
+    "package.json",
+    "gulpfile.js",
+    "config.*.json"
   ],
     "exclude": [
     "wwwroot",
