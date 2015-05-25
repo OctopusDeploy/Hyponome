@@ -25,18 +25,18 @@
                     <span class="labels">
                         @foreach(var label in @pull.Labels)
                         {
-                            <a href="" aria-label="View all @(@label.Name) issues" class="label labelstyle-@(@label.Color) linked-labelstyle-@(@label.Color) tooltipped tooltipped-n" style="background-color: #@(@label.Color); color: #222;">@label.Name</a>
+                            <a href="" class="label labelstyle-@(@label.Color) linked-labelstyle-@(@label.Color)" style="background-color: #@(@label.Color); color: #222;">@label.Name</a>
                         }
                     </span>
                     <div class="issue-meta">
                         <span class="issue-meta-section opened-by">
                             #@pull.Number opened <time datetime="@pull.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ssZ")" is="relative-time" title="@pull.CreatedAt.LocalDateTime.ToString("MMMM d, yyyy, hh:mm tt 'GMT'zz")"></time> by 
-                            <a href="@pull.User.HtmlUrl" class="tooltipped tooltipped-s muted-link" target="_blank">@pull.User.Login</a>
+                            <a href="@pull.User.HtmlUrl" class="muted-link" target="_blank">@pull.User.Login</a>
                         </span>
                         @if(@pull.Milestone != null)
                         {
                             <span class="issue-meta-section css-truncate issue-milestone">
-                                <a class="milestone-link muted-link css-truncate tooltipped tooltipped-s" aria-label="View all issues in this milestone" href="/milestones/vNext">
+                                <a class="milestone-link muted-link css-truncate tooltipped tooltipped-s" aria-label="View all issues in this milestone" href="/milestones/@pull.Milestone.Title">
                                     <span class="octicon octicon-milestone"></span>
                                     <span class="css-truncate-target">
                                         @pull.Milestone.Title
