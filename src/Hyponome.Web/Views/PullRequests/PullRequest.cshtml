@@ -155,7 +155,6 @@
 					var newText = editor.session.getLine(range.start.row);
 					var newScriptBody = JSON.parse("{" + newText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
 					
-					//$("#acediff-left-editor").text(newScriptBody);
 					if(!diffEditor) {
 						diffEditor = ace.edit("acediff-left-editor");
 						diffEditor.getSession().setMode('ace/mode/powershell');
@@ -192,7 +191,10 @@
 				        }
 				    });
 				}
-				
+				$("#acediff-left-editor").show();
+				$("#acediff-gutter").show();
+				$("#acediff-right-editor").show();
+
 				$("#pr-tabs a[href='#textdiff']").show();
 				$("#pr-tabs a[href='#textdiff']").tab("show");
 			},
