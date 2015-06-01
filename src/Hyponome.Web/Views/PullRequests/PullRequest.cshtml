@@ -109,11 +109,13 @@
 										@foreach(var file in @ViewBag.Files) {
 											<div class="file show-inline-notes">
 												<div class="file-header">
+													<div class="file-actions">
+														<button type="button" class="btn btn-sm" onclick="showScript('@("editor_" + @file.Sha)');">View</button>
+													</div>
 													<div class="file-info">
 														<span class="octicon octicon-file-text"></span>
 														<span title="@file.FileName"> @file.FileName</span>
 													</div>
-													<button type="button" onclick="showScript('@("editor_" + @file.Sha)');" class="btn btn-default"><span class="octicon octicon-unfold"></span> View Script</button>
 												</div>
 												<div class="data highlight blow-wrapper">
 													<div id="editor_@file.Sha" class="file-editor">@file.Patch</div>
