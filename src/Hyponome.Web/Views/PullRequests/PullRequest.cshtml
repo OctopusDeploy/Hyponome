@@ -105,10 +105,6 @@
 											<strong>@Model.Deletions deletions</strong>.
 										</div>
 									</div>
-									<p class="dashboard-notice">
-										<span class="mega-octicon octicon-info"></span>
-											To review the script of a new step template select the 'Octopus.Action.Script.ScriptBody' line, or to review the script of a modified step template, select the two 'Octopus.Action.Script.ScriptBody' lines (-/+) and press Ctrl-D (Cmd-D)
-									</p>
 									<div class="diff-view">
 										@foreach(var file in @ViewBag.Files) {
 											<div class="file show-inline-notes">
@@ -117,6 +113,7 @@
 														<span class="octicon octicon-file-text"></span>
 														<span title="@file.FileName"> @file.FileName</span>
 													</div>
+													<button type="button" onclick="showScript('@("editor_" + @file.Sha)');" class="btn btn-default"><span class="octicon octicon-unfold"></span> View Script</button>
 												</div>
 												<div class="data highlight blow-wrapper">
 													<div id="editor_@file.Sha" class="file-editor">@file.Patch</div>
@@ -146,60 +143,76 @@
 @section scripts {
 	<script>
 		var diffEditor;
-		var textDiffCommand = {
-			name: 'textDiffCommand',
-			bindKey: {win: 'Ctrl-D', mac: 'Command-D'},
-			exec: function(editor) {
-				var range = editor.getSelectionRange();
-				if(range.start.row === (range.end.row - 1)) {
-					var newText = editor.session.getLine(range.start.row);
-					var newScriptBody = JSON.parse("{" + newText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
-					
-					if(!diffEditor) {
-						diffEditor = ace.edit("acediff-left-editor");
-						diffEditor.getSession().setMode('ace/mode/powershell');
-						diffEditor.setTheme('ace/theme/monokai');
-						diffEditor.getSession().setUseWrapMode(false);
-						diffEditor.setReadOnly(true);
-						diffEditor.setOptions({ maxLines: Infinity });
-						$("#acediff-gutter").hide();
-						$("#acediff-right-editor").hide();
-					}
-					diffEditor.getSession().setValue(newScriptBody);
-				} else {
-					var	oldText = editor.session.getLine(range.start.row), 
-						newText = editor.session.getLine(range.end.row - 1);
-	
-					var oldScriptBody = JSON.parse("{" + oldText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
-					var newScriptBody = JSON.parse("{" + newText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
-	
-					var aceDiffer = new AceDiff({
-				        mode: "ace/mode/powershell",
-						theme: "ace/theme/monokai",
-						maxLines: Infinity,
-						showConnectors: true,
-				        left: {
-				            id: "acediff-left-editor",
-				            content: oldScriptBody.replace(/\r\n/g, "\n")
-				        },
-				        right: {
-				            id: "acediff-right-editor",
-				            content: newScriptBody.replace(/\r\n/g, "\n")
-				        },
-				        classes: {
-				            gutterID: "acediff-gutter"
-				        }
-				    });
-				}
-				$("#acediff-left-editor").show();
-				$("#acediff-gutter").show();
-				$("#acediff-right-editor").show();
+		var showNewScript = function(script) {
+			if(!diffEditor) {
+				diffEditor = ace.edit("acediff-left-editor");
+				diffEditor.getSession().setMode('ace/mode/powershell');
+				diffEditor.setTheme('ace/theme/monokai');
+				diffEditor.getSession().setUseWrapMode(false);
+				diffEditor.setReadOnly(true);
+				diffEditor.setOptions({ maxLines: Infinity });
+				$("#acediff-gutter").hide();
+				$("#acediff-right-editor").hide();
+			}
+			diffEditor.getSession().setValue(newScriptBody);
+		}
+		
+		var showModifiedScript = function(oldScript, newScript) {
+			var aceDiffer = new AceDiff({
+		        mode: "ace/mode/powershell",
+				theme: "ace/theme/monokai",
+				maxLines: Infinity,
+				showConnectors: true,
+		        left: {
+		            id: "acediff-left-editor",
+		            content: oldScript.replace(/\r\n/g, "\n")
+		        },
+		        right: {
+		            id: "acediff-right-editor",
+		            content: newScript.replace(/\r\n/g, "\n")
+		        },
+		        classes: {
+		            gutterID: "acediff-gutter"
+		        }
+		    });
+		}
+		
+		var showScript = function(editorId) {
+			var editor = ace.edit(editorId);
+			var occurrences = editor.findAll('Octopus.Action.Script.ScriptBody',{
+			    backwards: false,
+			    wrap: false,
+			    caseSensitive: false,
+			    wholeWord: false,
+			    regExp: false
+			});
+			
+			var first = editor.getSelectionRange();
+			if(occurrences === 1) {
+				var newText = editor.session.getLine(first.start.row);
+				var newScriptBody = JSON.parse("{" + newText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
+				showNewScript(newScriptBody);
+			} else {
+				editor.findNext();
+				var second = editor.getSelectionRange();
+				
+				var	oldText = editor.session.getLine(first.start.row), 
+					newText = editor.session.getLine(second.start.row);
 
-				$("#pr-tabs a[href='#textdiff']").show();
-				$("#pr-tabs a[href='#textdiff']").tab("show");
-			},
-			readOnly: true
-		};
+				var oldScriptBody = JSON.parse("{" + oldText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
+				var newScriptBody = JSON.parse("{" + newText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
+
+				showModifiedScript(oldScriptBody, newScriptBody);
+			}
+			
+			$("#acediff-left-editor").show();
+			$("#acediff-gutter").show();
+			$("#acediff-right-editor").show();
+
+			$("#pr-tabs a[href='#textdiff']").show();
+			$("#pr-tabs a[href='#textdiff']").tab("show");
+		}
+
 		$(document).ready(function () {
 			$('div[id^="editor_"]').each(function(index, item) {
 				var editor = ace.edit($(item).attr('id'));
@@ -208,7 +221,6 @@
 				editor.getSession().setUseWrapMode(false);
 				editor.setReadOnly(true);
 				editor.setOptions({ maxLines: Infinity });
-				editor.commands.addCommand(textDiffCommand);
 			});
 			
 			$('.merge-branch-action').click(function () {
