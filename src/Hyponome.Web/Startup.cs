@@ -16,7 +16,7 @@ namespace Hyponome
             var configuration = new Configuration()
                 .AddJsonFile("config.json")
                 .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
-                
+
             if(env.IsEnvironment("Development"))
             {
                 configuration.AddUserSecrets();
@@ -24,7 +24,7 @@ namespace Hyponome
             configuration.AddEnvironmentVariables();
             Configuration = configuration;
         }
-        
+
         public IConfiguration Configuration { get; set; }
 
         public void ConfigureServices(IServiceCollection services)
@@ -40,12 +40,12 @@ namespace Hyponome
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IGithubClientService githubClientService)
         {
             loggerFactory.AddConsole(minLevel: LogLevel.Warning);
-            
+
             app.UseCookieAuthentication(options => {
                 options.AutomaticAuthentication = true;
                 options.LoginPath = new PathString("/account/login");
             });
-            
+
             app.Use(async (context, next) => {
 //                 if (string.IsNullOrEmpty(context.User.Identity.Name))
 //                 {
@@ -59,10 +59,10 @@ namespace Hyponome
                         await githubClientService.SetCredentials(context.User.FindFirst("urn:github:accessToken").Value);
                     }
 //                 }
-                
+
                 await next();
             });
-            
+
             app.UseStaticFiles();
 
             if(env.IsEnvironment("Development"))
@@ -73,7 +73,7 @@ namespace Hyponome
             {
                 app.UseErrorHandler("/404.html");
             }
-            
+
             app.UseSession();
             app.UseMvc();
         }

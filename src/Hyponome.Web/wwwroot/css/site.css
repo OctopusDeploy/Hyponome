@@ -72,13 +72,17 @@ footer {
 	color: #666;
 }
 
-.footer-logo {
-	width: 32px;
-	margin: 0 auto;
-	overflow: hidden;
-}
-
 .footer-logo img {
 	height: 30px;
+	opacity: 0.2;
 	text-align: center;
+}
+
+.footer-logo a:hover img {
+	opacity: 0.5;
+}
+
+footer a {
+	font-weight: bold;
+	color: #666;
 }
