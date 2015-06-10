@@ -153,6 +153,8 @@
 				diffEditor.getSession().setUseWrapMode(false);
 				diffEditor.setReadOnly(true);
 				diffEditor.setOptions({ maxLines: Infinity });
+			
+				$("#acediff-left-editor").show();
 				$("#acediff-gutter").hide();
 				$("#acediff-right-editor").hide();
 			}
@@ -205,11 +207,11 @@
 				var newScriptBody = JSON.parse("{" + newText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
 
 				showModifiedScript(oldScriptBody, newScriptBody);
-			}
 			
-			$("#acediff-left-editor").show();
-			$("#acediff-gutter").show();
-			$("#acediff-right-editor").show();
+				$("#acediff-left-editor").show();
+				$("#acediff-gutter").show();
+				$("#acediff-right-editor").show();
+			}
 
 			$("#pr-tabs a[href='#textdiff']").show();
 			$("#pr-tabs a[href='#textdiff']").tab("show");
