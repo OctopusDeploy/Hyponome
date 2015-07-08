@@ -31,58 +31,32 @@
 						 </span>
 					</div>
 				</div>
-				@if(@ViewBag.IsCollaborator)
-				{
-					<div class="merge-pr">
-						<div class="branch-action @(@ViewBag.IsMergeable ? "branch-action-state-clean" : "branch-action-state-dirty")">
-							<span class="mega-octicon octicon-git-pull-request branch-action-icon"></span>
-							<span class="mega-octicon octicon-git-merge branch-action-icon"></span>
-							<div class="branch-action-body">
-								<div class="merge-message">
-									<div>
-										<button class="btn @(@ViewBag.IsMergeable ? "btn-primary" : "") merge-branch-action" type="button" @(@ViewBag.IsMergeable ? "" : "disabled")>
-											<span class="octicon octicon-git-merge"></span>
-											Merge pull request
-										</button>
-										<h3 class="merge-branch-heading">
-											@if(@ViewBag.IsMergeable)
-											{
-												<text>
-													This pull request can be automatically merged.
-												</text>
-											}
-											else
-											{
-												<text>
-													We can't automatically merge this pull request.
-												</text>
-											}
-										</h3>
-									</div>
+				<div class="merge-pr">
+					<div class="branch-action @(@ViewBag.IsMergeable ? "branch-action-state-clean" : "branch-action-state-dirty")">
+						<span class="mega-octicon octicon-git-pull-request branch-action-icon"></span>
+						<span class="mega-octicon octicon-git-merge branch-action-icon"></span>
+						<div class="branch-action-body">
+							<div class="merge-message">
+								<div>
+									<h3 class="merge-branch-heading">
+										@if(@ViewBag.IsMergeable)
+										{
+											<text>
+												This pull request can be automatically merged.
+											</text>
+										}
+										else
+										{
+											<text>
+												We can't automatically merge this pull request.
+											</text>
+										}
+									</h3>
 								</div>
 							</div>
 						</div>
-						<form action="/pull/@Model.Number/merge" method="post" class="merge-branch-form">
-							<input type="hidden" name="sha" value="@Model.Head.Sha"/>
-							<img alt="@("@" + @Context.User.Identity.Name)" class="commit-form-avatar" height="48" src="@Context.User.FindFirst("urn:github:avatar").Value"/>
-							<div class="commit-form">
-								<div class="merge-form-contents">
-									<h3 class="merge-branch-heading">
-										Merge pull request #@Model.Number from @Model.User.Login/@Model.Head.Ref
-									</h3>
-									<textarea name="message" id="merge_message_field" class="input-block input-contrast merge-commit-message">@Model.Title</textarea>
-									<div class="commit-form-actions">
-										<button type="submit" class="btn btn-primary">
-											<span class="octicon octicon-git-merge"></span>
-											Confirm merge
-										</button>
-										<button type="button" class="btn">Cancel</button>
-									</div>
-								</div>
-							</div>
-						</form>
 					</div>
-				}
+				</div>
 			</div>
 			<div role="tabpanel">
 				<ul id="pr-tabs" class="nav nav-tabs" role="tablist">

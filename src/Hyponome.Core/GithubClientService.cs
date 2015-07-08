@@ -62,7 +62,14 @@ namespace Hyponome.Core
         
         public async Task<bool> IsCollaborator(string user)
         {
-            return await githubClient.Repository.RepoCollaborators.IsCollaborator(Options.GithubOrganization, Options.GithubRepository, user);
+            try
+            {
+                return await githubClient.Repository.RepoCollaborators.IsCollaborator(Options.GithubOrganization, Options.GithubRepository, user);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
         
         public async Task<IReadOnlyList<Organization>> GetOrganizations()
