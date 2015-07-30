@@ -78,7 +78,7 @@ public class AccountController : Controller
 				new Claim("urn:github:accessToken", responseObject.AccessToken, ClaimValueTypes.String, claimsIssuer)
 			});
 			Console.WriteLine("[Authorized] Successfully logged in.");
-			Context.Response.SignIn(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+			await Context.Authentication.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 		}
 		else
 		{
@@ -89,11 +89,11 @@ public class AccountController : Controller
 	}
 	
 	[RouteAttribute("[action]")]
-	public ActionResult Logout()
+	public async Task<ActionResult> Logout()
 	{
 		if (!string.IsNullOrEmpty(Context.User.Identity.Name))
 		{
-			Context.Response.SignOut(CookieAuthenticationDefaults.AuthenticationScheme);
+			await Context.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 			Console.WriteLine("[Logout] {0} logged out.", Context.User.Identity.Name);
 		}
 		return RedirectToAction("Index", "Home");
