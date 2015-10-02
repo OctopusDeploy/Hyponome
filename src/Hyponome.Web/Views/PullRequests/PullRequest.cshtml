@@ -176,7 +176,13 @@
 				
 				var	oldText = editor.session.getLine(first.start.row), 
 					newText = editor.session.getLine(second.start.row);
-
+				
+				if(oldText.endsWith(',')) {
+					oldText = oldText.substr(0, oldText.length - 1);
+				}
+				if(newText.endsWith(',')) {
+					newText = newText.substr(0, newText.length - 1);
+				}
 				var oldScriptBody = JSON.parse("{" + oldText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
 				var newScriptBody = JSON.parse("{" + newText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
 

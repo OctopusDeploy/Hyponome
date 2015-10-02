@@ -1,9 +1,8 @@
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
-using Microsoft.Framework.Runtime;
+using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
-using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.Configuration;
 using Hyponome.Core;
@@ -30,8 +29,8 @@ namespace Hyponome
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<AppSettings>(Configuration.GetConfigurationSection("AppSettings"));
-            services.Configure<GithubOptions>(Configuration.GetConfigurationSection("Github"));
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<GithubOptions>(Configuration.GetSection("Github"));
             services.AddSingleton(typeof(IGithubClientService), typeof(GithubClientService));
             services.AddCaching();
             services.AddSession();
