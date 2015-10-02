@@ -36,7 +36,7 @@ namespace Hyponome.Core
         public GithubClientService(ILogger<GithubClientService> logger, IOptions<GithubOptions> optionsAccessor)
         {
             this.logger = logger;
-            Options = optionsAccessor.Options;
+            Options = optionsAccessor.Value;
             githubClient = new GitHubClient(new ProductHeaderValue("Hyponome"));
         }
         

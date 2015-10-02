@@ -101,7 +101,7 @@ public class PullRequestsController : Controller
 		ViewBag.IsMergeable = pullRequest.Mergeable.HasValue && pullRequest.Mergeable.Value;
 		var pullRequestFiles = await githubClientService.GetPullRequestFiles(githubOptions.GithubOrganization, githubOptions.GithubRepository, pullRequest.Number);
 		ViewBag.Files = pullRequestFiles;
-		ViewBag.IsCollaborator = string.IsNullOrEmpty(Context.User.Identity.Name) ? false : await githubClientService.IsCollaborator(Context.User.Identity.Name);
+		ViewBag.IsCollaborator = string.IsNullOrEmpty(HttpContext.User.Identity.Name) ? false : await githubClientService.IsCollaborator(HttpContext.User.Identity.Name);
 		
 		return View("PullRequest", pullRequest);
 	}

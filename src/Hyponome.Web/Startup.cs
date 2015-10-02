@@ -13,7 +13,8 @@ namespace Hyponome
     {
         public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
-            var configuration = new ConfigurationBuilder(appEnv.ApplicationBasePath)
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(appEnv.ApplicationBasePath)
                 .AddJsonFile("config.json")
                 .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
 
@@ -67,11 +68,11 @@ namespace Hyponome
 
             if(env.IsEnvironment("Development"))
             {
-                app.UseErrorPage();
+                app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseErrorHandler("/404.html");
+                app.UseExceptionHandler("/404.html");
             }
 
             app.UseSession();
