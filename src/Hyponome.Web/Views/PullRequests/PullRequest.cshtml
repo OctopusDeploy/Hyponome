@@ -168,6 +168,9 @@
 			var first = editor.getSelectionRange();
 			if(occurrences === 1) {
 				var newText = editor.session.getLine(first.start.row);
+				if(newText.endsWith(',')) {
+					newText = newText.substr(0, newText.length - 1);
+				}
 				var newScriptBody = JSON.parse("{" + newText.substr(1) + "}")["Octopus.Action.Script.ScriptBody"];
 				showNewScript(newScriptBody);
 			} else {
