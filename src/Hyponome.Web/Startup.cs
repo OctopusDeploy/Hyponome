@@ -1,72 +1,37 @@
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Http;
-using Microsoft.Dnx.Runtime;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
-using Microsoft.AspNet.Hosting;
-using Microsoft.Framework.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Hyponome.Core;
+using Microsoft.Extensions.Logging;
 
-namespace Hyponome
+namespace Hyponome.Web
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
+        public Startup(IConfiguration configuration)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(appEnv.ApplicationBasePath)
-                .AddJsonFile("config.json")
-                .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
-
-            if(env.IsEnvironment("Development"))
-            {
-                configuration.AddUserSecrets();
-            }
-            configuration.AddEnvironmentVariables();
-            Configuration = configuration.Build();
+            Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; set; }
+        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            services.Configure<GithubOptions>(Configuration.GetSection("Github"));
-            services.AddSingleton(typeof(IGithubClientService), typeof(GithubClientService));
-            services.AddCaching();
-            services.AddSession();
+            services.Configure<GitHubOptions>(Configuration.GetSection("GitHub"));
+            services.AddSingleton(typeof(IGitHubClientService), typeof(GitHubClientService));
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IGithubClientService githubClientService)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(minLevel: LogLevel.Warning);
 
-            app.UseCookieAuthentication(options => {
-                options.AutomaticAuthentication = true;
-                options.LoginPath = new PathString("/account/login");
-            });
-
-            app.Use(async (context, next) => {
-//                 if (string.IsNullOrEmpty(context.User.Identity.Name))
-//                 {
-//                     context.Response.Challenge();
-//                 }
-//                 else
-//                 {
-                    if(!string.IsNullOrEmpty(context.User.Identity.Name) && githubClientService.CurrentUser == null)
-                    {
-                        System.Console.WriteLine("Authenticating GitHub client for {0}", context.User.Identity.Name);
-                        await githubClientService.SetCredentials(context.User.FindFirst("urn:github:accessToken").Value);
-                    }
-//                 }
-
-                await next();
-            });
-
-            app.UseStaticFiles();
-
-            if(env.IsEnvironment("Development"))
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -75,7 +40,8 @@ namespace Hyponome
                 app.UseExceptionHandler("/404.html");
             }
 
-            app.UseSession();
+            app.UseStaticFiles();
+
             app.UseMvc();
         }
     }
