@@ -3,16 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "webAppName": {
-            "defaultValue": "#{Azure:WebApp:Name}",
-            "type": "String"
+            "value": "#{Azure:WebApp:Name}"
         },
         "appServiceName": {
-            "defaultValue": "#{Azure:AppService:Name}",
-            "type": "String"
+            "value": "#{Azure:AppService:Name}"
         },
         "appServiceSkuName": {
-            "defaultValue": "#{Azure:AppService:SkuName}",
-            "type": "String"
+            "value": "#{Azure:AppService:SkuName}"
         }
     }
 }
