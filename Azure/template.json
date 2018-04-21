@@ -1,0 +1,102 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "webAppName": {
+            "defaultValue": "DefaultValueFromTemplate",
+            "type": "string"
+        },
+        "configWebName": {
+            "defaultValue": "web",
+            "type": "string"
+        },
+        "appServiceName": {
+            "defaultValue": "DefaultValueFromTemplate",
+            "type": "string"
+        },
+        "appServiceSkuName": {
+            "defaultValue": "DefaultValueFromTemplate",
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/1ad749f5-ce35-4ed1-9d6f-d6292ae0d62e/resourceGroups/hyponome-prod-resources/providers/Microsoft.Web/serverfarms/hyponome-prod-appserviceplan'.",
+            "type": "Microsoft.Web/serverfarms",
+            "sku": {
+                "name": "[parameters('appServiceSkuName')]"
+            },
+            "kind": "app",
+            "name": "[parameters('appServiceName')]",
+            "apiVersion": "2016-09-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "name": "[parameters('appServiceName')]"
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/1ad749f5-ce35-4ed1-9d6f-d6292ae0d62e/resourceGroups/hyponome-prod-resources/providers/Microsoft.Web/sites/hyponome-prod-webapp'.",
+            "type": "Microsoft.Web/sites",
+            "kind": "app",
+            "name": "[parameters('webAppName')]",
+            "apiVersion": "2016-08-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "hidden-related:/subscriptions/1ad749f5-ce35-4ed1-9d6f-d6292ae0d62e/resourceGroups/hyponome-prod-resources/providers/Microsoft.Web/serverfarms/hyponome-prod-appserviceplan": "Resource",
+                "hidden-related:/subscriptions/3c1b5e9a-57c7-47f8-bbe0-861ff2f9b0e3/resourceGroups/hyponome-prod-resources/providers/Microsoft.Web/serverfarms/hyponome-prod-appserviceplan": "Resource"
+            },
+            "scale": null,
+            "properties": {
+                "enabled": true,
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServiceName'))]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('appServiceName'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/1ad749f5-ce35-4ed1-9d6f-d6292ae0d62e/resourceGroups/hyponome-prod-resources/providers/Microsoft.Web/sites/hyponome-prod-webapp/config/web'.",
+            "type": "Microsoft.Web/sites/config",
+            "name": "[concat(parameters('webAppName'), '/', parameters('configWebName'))]",
+            "apiVersion": "2016-08-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "hidden-related:/subscriptions/1ad749f5-ce35-4ed1-9d6f-d6292ae0d62e/resourceGroups/hyponome-prod-resources/providers/Microsoft.Web/serverfarms/hyponome-prod-appserviceplan": "Resource",
+                "hidden-related:/subscriptions/3c1b5e9a-57c7-47f8-bbe0-861ff2f9b0e3/resourceGroups/hyponome-prod-resources/providers/Microsoft.Web/serverfarms/hyponome-prod-appserviceplan": "Resource"
+            },
+            "scale": null,
+            "properties": {
+                "numberOfWorkers": 1,
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false,
+                        "virtualDirectories": null
+                    }
+                ]
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/1ad749f5-ce35-4ed1-9d6f-d6292ae0d62e/resourceGroups/hyponome-prod-resources/providers/Microsoft.Web/sites/hyponome-prod-webapp/hostNameBindings/hyponome-prod-webapp.azurewebsites.net'.",
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "name": "[concat(parameters('webAppName'), '/', concat(parameters('webAppName'),'.azurewebsites.net'))]",
+            "apiVersion": "2016-08-01",
+            "location": "[resourceGroup().location]",
+            "scale": null,
+            "properties": {
+                "siteName": "[parameters('webAppName')]",
+                "domainId": null,
+                "hostNameType": "Verified"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+            ]
+        }
+    ]
+}
