@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
+    <PackageReference Include="Octokit" Version="0.29.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -13,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Hyponome.Core\Hyponome.Core.csproj" />
+    <Content Remove="appsettings.Development.json" />
   </ItemGroup>
 
 </Project>
