@@ -1,0 +1,48 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+configuration: Release
+
+init:
+  - git config --global core.autocrlf true
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+
+before_build:
+  - cmd: dotnet --version
+  - cmd: dotnet restore src/Hyponome.sln
+
+build:
+  project: src/Hyponome.sln
+  verbosity: minimal
+
+after_build:
+  - cmd: dotnet publish src/Hyponome.sln -o ../../publish
+
+artifacts:
+  - path: 'publish'
+    name: 'Hyponome.Web.$(appveyor_build_version)'
+    type: zip
+
+deploy:
+  - provider: GitHub
+    release: v$(appveyor_build_version)
+    artifact: /.*\.zip/
+    draft: false
+    prerelease: false
+    on:
+      branch: master
+      appveyor_repo_tag: true
