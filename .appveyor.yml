@@ -34,11 +34,12 @@ after_build:
 
 artifacts:
   - path: 'publish'
-    name: Hyponome.Web.{version}
+    name: 'Hyponome.Web.$(appveyor_build_version)'
     type: zip
 
 deploy:
   - provider: GitHub
+    release: v$(appveyor_build_version)
     artifact: /.*\.zip/
     draft: false
     prerelease: false
