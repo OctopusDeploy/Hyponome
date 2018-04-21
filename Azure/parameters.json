@@ -7,11 +7,11 @@
             "type": "String"
         },
         "appServiceName": {
-            "defaultValue": "${Azure:AppService:Name}",
+            "defaultValue": "#{Azure:AppService:Name}",
             "type": "String"
         },
         "appServiceSkuName": {
-            "defaultValue": "${Azure:AppService:SkuName}",
+            "defaultValue": "#{Azure:AppService:SkuName}",
             "type": "String"
         }
     }
