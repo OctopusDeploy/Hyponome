@@ -2,15 +2,15 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "webapp_name": {
+        "webAppName": {
             "defaultValue": "#{Azure:WebApp:Name}",
             "type": "String"
         },
-        "appserviceplan_name": {
+        "appServiceName": {
             "defaultValue": "${Azure:AppService:Name}",
             "type": "String"
         },
-        "appserviceplan_skuname": {
+        "appServiceSkuName": {
             "defaultValue": "${Azure:AppService:SkuName}",
             "type": "String"
         }
