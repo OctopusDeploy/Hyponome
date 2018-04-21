@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Hyponome.Core;
+using Hyponome.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Octokit;
 
