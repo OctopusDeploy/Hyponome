@@ -10,7 +10,7 @@ init:
         Update-AppveyorBuild -Version "$env:APPVEYOR_REPO_TAG_NAME"
       }
   - ps: >-
-      $env:INFORMATIONAL_VERSION="$($env:APPVEYOR_BUILD_VERSION)+Branch.$($env:APPVEYOR_REPO_BRANCH).Sha.$($env:APPVEYOR_REPO_COMMIT)""
+      $env:INFORMATIONAL_VERSION="$($env:APPVEYOR_BUILD_VERSION)+Branch.$($env:APPVEYOR_REPO_BRANCH).Sha.$($env:APPVEYOR_REPO_COMMIT)"
       Write-Host "Informational version: $($env:INFORMATIONAL_VERSION)"
 
 assembly_info:
