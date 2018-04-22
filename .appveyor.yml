@@ -31,7 +31,8 @@ dotnet_csproj:
   informational_version: '$(INFORMATIONAL_VERSION)'
 
 before_build:
-  - git describe --tags $(git rev-list --tags --max-count=1)
+  - ps: >-
+      git describe --tags $(git rev-list --tags --max-count=1)
   - cmd: dotnet --version
   - cmd: dotnet restore src/Hyponome.sln
 
