@@ -12,7 +12,6 @@ assembly_info:
 
 before_build:
   - ps: gitversion /l console /output buildserver /updateAssemblyInfo
-  - ps: Update-AppveyorBuild -Version "$env:GitVersion_NuGetVersion"
   - cmd: dotnet --version
   - cmd: dotnet restore src/Hyponome.sln
 
