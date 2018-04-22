@@ -5,6 +5,10 @@ configuration: Release
 init:
   - git config --global core.autocrlf true
   - ps: >-
+      $latestTag = $(git describe --tags $(git rev-list --tags --max-count=1))
+
+      Write-Host "Latest tag is $($latestTag)"
+  - ps: >-
       if ($env:APPVEYOR_REPO_TAG -eq "true")
       {
         Update-AppveyorBuild -Version "$env:APPVEYOR_REPO_TAG_NAME"
