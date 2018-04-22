@@ -43,7 +43,7 @@ deploy:
   - provider: Octopus
     push_packages: true
     create_release: true
-    deploy_release: false
+    deploy_release: true
     server: https://deploy.octopushq.com
     api_key:
       secure: l2Uw2jw/wd+RI1r01AZMALvYHCsoS66rve+XsZQoCU0=
