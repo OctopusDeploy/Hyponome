@@ -5,7 +5,7 @@ configuration: Release
 init:
   - git config --global core.autocrlf true
   - ps: >-
-      pushd $env:APPVEYOR_BUILD_FOLDER
+      pushd $($env:APPVEYOR_BUILD_FOLDER)
       $latestTag = $(git describe --tags $(git rev-list --tags --max-count=1))
 
       Write-Host "Latest tag is $($latestTag)"
