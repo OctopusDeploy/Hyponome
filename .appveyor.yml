@@ -2,13 +2,10 @@ version: 2.0.0-ci.{build}
 image: Visual Studio 2017
 configuration: Release
 
-environment:
-  informational_version: "$($env:APPVEYOR_BUILD_VERSION)+Branch.$($env:APPVEYOR_REPO_BRANCH).Sha.$($env:APPVEYOR_REPO_COMMIT)"
-
 init:
   - git config --global core.autocrlf true
   - ps: >-
-      Write-Host "Informational version: $($env:informational_version)"
+      Write-Host "Informational version: $($env:APPVEYOR_BUILD_VERSION)+Branch.$($env:APPVEYOR_REPO_BRANCH).Sha.$($env:APPVEYOR_REPO_COMMIT)"
   - ps: >-
       if ($env:APPVEYOR_REPO_TAG -eq "true")
       {
