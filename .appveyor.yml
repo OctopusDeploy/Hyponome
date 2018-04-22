@@ -19,7 +19,7 @@ assembly_info:
   file: AssemblyInfo.*
   assembly_version: "{version}"
   assembly_file_version: "{version}"
-  assembly_informational_version: "$($env:informational_version)"
+  assembly_informational_version: "$(INFORMATIONAL_VERSION)"
 
 dotnet_csproj:
   patch: true
@@ -28,7 +28,7 @@ dotnet_csproj:
   package_version: '{version}'
   assembly_version: '{version}'
   file_version: '{version}'
-  informational_version: '$($env:informational_version)'
+  informational_version: '$(INFORMATIONAL_VERSION)'
 
 before_build:
   - cmd: dotnet --version
