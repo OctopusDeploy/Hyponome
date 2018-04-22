@@ -7,8 +7,8 @@ environment:
 
 init:
   - git config --global core.autocrlf true
+  - ps: Write-Host "Informational version: $($env:informational_version)"
   - ps: >-
-      Write-Host "Informational version: $($env:informational_version)"
       if ($env:APPVEYOR_REPO_TAG -eq "true")
       {
         Update-AppveyorBuild -Version "$env:APPVEYOR_REPO_TAG_NAME"
