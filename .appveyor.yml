@@ -33,7 +33,7 @@ deploy:
     release: $(appveyor_build_version)
     artifact: /.*\.zip/
     auth_token:
-      secure: B2JVRrkpAtNQ8+2sB67MekSAwnzooAzjstsEC6dBYEV5GTicllgCtDuf3xTjlWz4
+      secure: RKJcL2Cdv/b3iiKoxADcLMf/dmoi9UGn6EkgpKUQkyitgwHDG7aVp26TUmuzwYdt
     draft: false
     prerelease: false
     on:
@@ -46,7 +46,7 @@ deploy:
     deploy_release: true
     server: https://deploy.octopushq.com
     api_key:
-      secure: l2Uw2jw/wd+RI1r01AZMALvYHCsoS66rve+XsZQoCU0=
+      secure: IuRXJNyTNNPWzv1w4Rw0HkSgUp1qRHxHFRM6fldpTcs=
     artifact: /.*\.zip/
     project: Hyponome
     environment: Test
