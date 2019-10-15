@@ -1,0 +1,19 @@
+﻿@inherits PullRequestItemBase
+
+<div class="container">
+    <h4 class="mb-0">@PullRequest.Title <small class="text-muted">#@PullRequest.Number</small></h4>
+    <small class="text-muted">
+        <a href="@PullRequest.User.HtmlUrl" class="link-muted">@PullRequest.User.Login</a> wants to merge @PullRequest.Commits commit@(PullRequest.Commits == 1 ? "" : "s") into
+        <span class="badge badge-octopus">@PullRequest.Base.Label</span>
+        from
+        <span class="badge badge-octopus">@PullRequest.Head.Label</span>
+    </small>
+</div>
+<div id="nav-content-container" class="container mt-4">
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-conversation" data-toggle="list" href="#navConversation" role="tab" aria-controls="nav-conversation">Conversation <span class="badge badge-light align-text-top ml-4">@PullRequest.Comments</span></a>
+            <a class="nav-item nav-link" id="nav-files" data-toggle="list" href="#navFiles" role="tab" aria-controls="nav-files">Files changed <span class="badge badge-light align-text-top ml-4">@PullRequest.ChangedFiles</span></a>
+        </div>
+    </nav>
+</div>

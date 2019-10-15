@@ -1,0 +1,15 @@
+@page "/pull/{Number:int}"
+
+@using Hyponome.Client.Components.Loading
+@using Hyponome.Client.Components.PullRequests
+
+@inherits PullRequestBase
+
+@if(PullRequest == null)
+{
+    <Loading />
+}
+else
+{
+    <PullRequestItem PullRequest="@PullRequest" />
+}

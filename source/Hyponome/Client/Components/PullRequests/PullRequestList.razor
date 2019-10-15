@@ -1,0 +1,6 @@
+﻿@inherits PullRequestListBase
+
+@foreach (var pullRequest in PullRequests)
+{
+    <PullRequestListItem PullRequest="@pullRequest" />
+}

@@ -1,0 +1,47 @@
+@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+.issue-title-link {
+    color: rgb(51, 51, 51);
+}
+
+.link-muted {
+    color: rgb(119, 119, 119);
+    font-weight: 600;
+}
+
+.link-muted:hover {
+    color: rgb(65, 131, 196);
+}
+
+app {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.badge-octopus {
+    color: #fff;
+    background-color: #2E92DF;
+}
+
+.content {
+    padding-top: 5rem;
+}
+
+
+@media (max-width: 767.98px) {
+}
+
+@media (min-width: 768px) {
+    app {
+        flex-direction: row;
+    }
+}

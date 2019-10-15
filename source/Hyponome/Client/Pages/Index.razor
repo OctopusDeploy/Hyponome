@@ -1,0 +1,17 @@
+﻿@page "/"
+
+@using Hyponome.Client.Components.Loading
+@using Hyponome.Client.Components.PullRequests
+
+@inherits IndexBase
+
+@if (PullRequests == null)
+{
+    <Loading />
+}
+else
+{
+    <div class="container">
+        <PullRequestList PullRequests="PullRequests" />
+    </div>
+}
