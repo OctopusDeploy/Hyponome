@@ -19,6 +19,7 @@ assembly_info:
 before_build:
   - pwsh: gitversion /l console /output buildserver /updateAssemblyInfo
   - pwsh: Update-AppveyorBuild -Version "$env:GitVersion_FullSemVer"
+  - pwsh: dotnet --version
   - pwsh: dotnet restore source/Hyponome.sln
 
 build:
