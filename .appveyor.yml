@@ -52,6 +52,7 @@ deploy:
     create_release: true
     project: Hyponome
     release_number: $(appveyor_build_version)
+    release_channel: 'Pre-Release'
     deploy_release: true
     environment: Development
     deploy_wait: true
@@ -64,6 +65,7 @@ deploy:
     create_release: true
     project: Hyponome
     release_number: $(appveyor_build_version)
+    release_channel: 'Release'
     deploy_release: true
     environment: Test
     deploy_wait: true
