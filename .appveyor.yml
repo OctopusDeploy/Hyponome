@@ -20,10 +20,10 @@ build:
   verbosity: minimal
 
 after_build:
-  - pwsh: dotnet publish source/Hyponome.sln -o ../../publish
+  - pwsh: dotnet publish source/Hyponome.sln -o ./publish
 
 artifacts:
-  - path: 'publish'
+  - path: './publish'
     name: 'Hyponome.$(appveyor_build_version)'
     type: zip
 
