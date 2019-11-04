@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Client\Hyponome.Client.csproj" />
     <ProjectReference Include="..\Shared\Hyponome.Shared.csproj" />
   </ItemGroup>
+  
+  <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
+    <Content Remove="sample-data\**" />
+  </ItemGroup>
 </Project>
