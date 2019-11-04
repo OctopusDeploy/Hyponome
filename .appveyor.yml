@@ -17,17 +17,17 @@ assembly_info:
   patch: false
 
 before_build:
-  - pwsh: gitversion /l console /output buildserver /updateAssemblyInfo
-  - pwsh: Update-AppveyorBuild -Version "$env:GitVersion_FullSemVer"
-  - pwsh: dotnet --version
-  - pwsh: dotnet restore source/Hyponome.sln
+  - ps: dotnet --version
+  - ps: dotnet restore source/Hyponome.sln
+  - ps: gitversion /l console /output buildserver /updateAssemblyInfo
+  - ps: Update-AppveyorBuild -Version "$env:GitVersion_FullSemVer"
 
 build:
   project: source/Hyponome.sln
   verbosity: minimal
 
 after_build:
-  - pwsh: dotnet publish source/Hyponome/Server -o ./publish
+  - ps: dotnet publish source/Hyponome/Server -o ./publish
 
 artifacts:
   - path: './publish'
