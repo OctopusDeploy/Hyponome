@@ -1,6 +1,12 @@
 image: Visual Studio 2019
 configuration: Release
 
+environment:
+  octopus_api_key:
+    secure: IuRXJNyTNNPWzv1w4Rw0HkSgUp1qRHxHFRM6fldpTcs=
+  github_auth_token:
+    secure: RKJcL2Cdv/b3iiKoxADcLMf/dmoi9UGn6EkgpKUQkyitgwHDG7aVp26TUmuzwYdt
+
 init:
   - git config --global core.autocrlf true
 
@@ -24,15 +30,14 @@ after_build:
 
 artifacts:
   - path: './publish'
-    name: 'Hyponome.$(appveyor_build_version)'
+    name: 'Hyponome.Web.$(appveyor_build_version)'
     type: zip
 
 deploy:
   - provider: GitHub
     release: $(appveyor_build_version)
     artifact: /.*\.zip/
-    auth_token:
-      secure: RKJcL2Cdv/b3iiKoxADcLMf/dmoi9UGn6EkgpKUQkyitgwHDG7aVp26TUmuzwYdt
+    auth_token: $(github_auth_token)
     draft: false
     prerelease: false
     on:
@@ -40,13 +45,23 @@ deploy:
       appveyor_repo_tag: true
 
   - provider: Octopus
+    server: https://deploy.octopushq.com
+    api_key: $(octopus_api_key)
     push_packages: true
+    artifact: /.*\.zip/
     create_release: true
     deploy_release: true
+    project: Hyponome
+    environment: Development
+    deploy_wait: true
+      
+  - provider: Octopus
     server: https://deploy.octopushq.com
-    api_key:
-      secure: IuRXJNyTNNPWzv1w4Rw0HkSgUp1qRHxHFRM6fldpTcs=
+    api_key: $(octopus_api_key)
+    push_packages: true
     artifact: /.*\.zip/
+    create_release: true
+    deploy_release: true
     project: Hyponome
     environment: Test
     deploy_wait: true
