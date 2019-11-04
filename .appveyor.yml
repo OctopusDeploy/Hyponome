@@ -1,0 +1,55 @@
+image: Visual Studio 2019
+configuration: Release
+
+init:
+  - git config --global core.autocrlf true
+
+install:
+  - choco install gitversion.portable -pre -y
+
+assembly_info:
+  patch: false
+
+before_build:
+  - pwsh: gitversion /l console /output buildserver /updateAssemblyInfo
+  - pwsh: Update-AppveyorBuild -Version "$env:GitVersion_FullSemVer"
+  - pwsh: dotnet restore source/Hyponome.sln
+
+build:
+  project: source/Hyponome.sln
+  verbosity: minimal
+
+after_build:
+  - pwsh: dotnet publish source/Hyponome.sln -o ../../publish
+
+artifacts:
+  - path: 'publish'
+    name: 'Hyponome.$(appveyor_build_version)'
+    type: zip
+
+deploy:
+  - provider: GitHub
+    release: $(appveyor_build_version)
+    artifact: /.*\.zip/
+    auth_token:
+      secure: RKJcL2Cdv/b3iiKoxADcLMf/dmoi9UGn6EkgpKUQkyitgwHDG7aVp26TUmuzwYdt
+    draft: false
+    prerelease: false
+    on:
+      branch: master
+      appveyor_repo_tag: true
+
+  - provider: Octopus
+    push_packages: true
+    create_release: true
+    deploy_release: true
+    server: https://deploy.octopushq.com
+    api_key:
+      secure: IuRXJNyTNNPWzv1w4Rw0HkSgUp1qRHxHFRM6fldpTcs=
+    artifact: /.*\.zip/
+    project: Hyponome
+    environment: Test
+    deploy_wait: true
+    on:
+      branch: master
+      appveyor_repo_tag: true
