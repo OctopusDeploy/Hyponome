@@ -50,8 +50,9 @@ deploy:
     push_packages: true
     artifact: /.*\.zip/
     create_release: true
-    deploy_release: true
     project: Hyponome
+    release_number: $(appveyor_build_version)
+    deploy_release: true
     environment: Development
     deploy_wait: true
       
@@ -61,8 +62,9 @@ deploy:
     push_packages: true
     artifact: /.*\.zip/
     create_release: true
-    deploy_release: true
     project: Hyponome
+    release_number: $(appveyor_build_version)
+    deploy_release: true
     environment: Test
     deploy_wait: true
     on:
