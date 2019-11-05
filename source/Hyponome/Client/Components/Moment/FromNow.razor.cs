@@ -14,9 +14,13 @@ namespace Hyponome.Client.Components.Moment
 
         protected string FromNowText { get; set; }
         protected string Title => Value.LocalDateTime.ToString("MMMM d, yyyy, hh:mm tt 'GMT'zz");
-    
 
-        protected override async Task OnInitializedAsync() =>
-            FromNowText = await new HyponomeInterop(JSRuntime).Moment.FromNow(Value.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+
+        protected override async Task OnInitializedAsync()
+        {
+            var jsInterop = new HyponomeInterop(JSRuntime);
+            FromNowText = await jsInterop.Moment.FromNow(Value.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+            await jsInterop.Bootstrap.Tooltip();
+        }
     }
 }

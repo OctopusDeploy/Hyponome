@@ -21,6 +21,7 @@ namespace Hyponome.Server.Services
         Task<IEnumerable<Issue>> GetPullRequests();
         Task<PullRequest> GetPullRequest(int number);
         Task<IReadOnlyList<PullRequestFile>> GetPullRequestFiles(int number);
+        Task<IReadOnlyList<PullRequestReview>> GetPullRequestReviews(int number);
         Task<PullRequestMerge> MergePullRequest(int number, MergePullRequest request);
         Task<IReadOnlyList<Milestone>> GetMilestones();
         Task<Milestone> GetMilestone(string milestone);
@@ -97,6 +98,11 @@ namespace Hyponome.Server.Services
         public async Task<IReadOnlyList<PullRequestFile>> GetPullRequestFiles(int number)
         {
             return await githubClient.PullRequest.Files(Options.OrganizationName, Options.RepositoryName, number);
+        }
+
+        public async Task<IReadOnlyList<PullRequestReview>> GetPullRequestReviews(int number)
+        {
+            return await githubClient.PullRequest.Review.GetAll(Options.OrganizationName, Options.RepositoryName, number);
         }
 
         public async Task<PullRequestMerge> MergePullRequest(int number, MergePullRequest request)

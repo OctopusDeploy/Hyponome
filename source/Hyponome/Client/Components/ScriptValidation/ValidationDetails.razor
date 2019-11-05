@@ -1,0 +1,22 @@
+@inherits ValidationDetailsBase
+
+@if (Errors is null || !Errors.Any())
+{
+    <h6 class="text-white mb-0">
+        <i class="fas fa-check-circle"></i> Script validation was successful!
+    </h6>
+}
+else
+{
+    <div class="text-danger">
+        <h6><span class="fas fa-exclamation-circle"></span> Script validation failed!</h6>
+        <ul>
+            @foreach (var error in Errors)
+            {
+                <li>
+                    At line:@(error.Line); column:@(error.Column) - @error.Message
+                </li>
+            }
+        </ul>
+    </div>
+}

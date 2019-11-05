@@ -1,22 +1,36 @@
-@using  Hyponome.Client.Components.Moment
+@using Hyponome.Client.Components.Moment
 @inherits PullRequestListItemBase
 
 <div class="card mb-1">
     <div class="row no-gutters">
-        <div class="col-md-11">
+        @* <div class="col-md-12"> *@
             <div class="card-body p-2">
                 <h6 class="card-title mb-0">
-                    <a href="pull/@PullRequest.Number" class="issue-title-link">@PullRequest.Title</a>
+                    <a href="@PullRequest.Number" class="issue-title-link">@PullRequest.Title</a>
+                    @if (PullRequest.Labels != null && PullRequest.Labels.Any())
+                    {
+                        <small>
+                            @foreach (var label in PullRequest.Labels)
+                            {
+                                <span class="badge @label.BackgroundColor" style="background-color: @($"#{label.BackgroundColor}")">@label.Name</span>
+                            }
+                        </small>
+                    }
                 </h6>
                 <p class="card-text">
                     <small class="text-muted">
-                        #@PullRequest.Number opened <FromNow Value="@PullRequest.Created" /> by <a href="@PullRequest.User.HtmlUrl" class="link-muted" target="_blank">@PullRequest.User.Login</a><span class="pl-1"><span class="oi oi-signpost"></span>@PullRequest.Milestone.Title</span>
+                        #@PullRequest.Number opened <FromNow Value="@PullRequest.Created"/> by <a href="@PullRequest.User.HtmlUrl" class="link-muted" target="_blank">@PullRequest.User.Login</a>
+                        <span class="badge badge-octopus ml-1">
+                            <i class="fas fa-map-signs"></i> @PullRequest.Milestone.Title</span>
                     </small>
                 </p>
             </div>
-        </div>
-        <div class="col-md-1 align-self-center text-center">
-            <span class="badge badge-light" title="@PullRequest.Comments comments"><span class="oi oi-comment-square pr-1"></span>@PullRequest.Comments</span>
-        </div>
+        @* </div> *@
+        @* <div class="col-md-1 align-self-center text-center"> *@
+        @*     <a href="@PullRequest.Number" class="link-muted"> *@
+        @*         <span class="small font-weight-bold"> *@
+        @*             <i class="far fa-comment-alt"></i> @PullRequest.Comments</span> *@
+        @*     </a> *@
+        @* </div> *@
     </div>
 </div>

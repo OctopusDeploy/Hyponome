@@ -1,0 +1,11 @@
+@inherits ScriptViewerBase
+@using Hyponome.Client.Components.Ace
+
+@if (Scripts.Count() == 1)
+{
+    <AceEditor Key="@File.Sha" Script="@Scripts.FirstOrDefault()" Mode="@ScriptMode"/>
+}
+else if (Scripts.Count() > 1)
+{
+    <AceDiff Scripts="@Scripts" Mode="@ScriptMode"/>
+}

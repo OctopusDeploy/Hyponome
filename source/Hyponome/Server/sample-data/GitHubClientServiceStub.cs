@@ -1,10 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Options;
 using Octokit;
+using Octokit.Internal;
 
 namespace Hyponome.Server.Services
 {
@@ -25,14 +28,14 @@ namespace Hyponome.Server.Services
 
         public Task<IEnumerable<Issue>> GetPullRequests()
         {
-            var issues = ReadResource<IEnumerable<Issue>>("issues.json");
+            var issues = ReadResource<IEnumerable<Issue>>("issues.json") ?? new List<Issue>();
             var pulls = issues.Where(i => i.PullRequest != null);
             return Task.FromResult(pulls);
         }
 
         public Task<PullRequest> GetPullRequest(int number)
         {
-            var pullRequest = ReadResource<PullRequest>(number.ToString(), "pullrequest.json");
+            var pullRequest = ReadResource<PullRequest>(number.ToString(), "pullrequest.json") ?? new PullRequest();
             return Task.FromResult(pullRequest);
         }
 
@@ -63,8 +66,14 @@ namespace Hyponome.Server.Services
 
         public Task<IReadOnlyList<PullRequestFile>> GetPullRequestFiles(int number)
         {
-            var files = ReadResource<IReadOnlyList<PullRequestFile>>(number.ToString(), "pullrequest-files.json");
+            var files = ReadResource<IReadOnlyList<PullRequestFile>>(number.ToString(), "pullrequest-files.json") ?? new List<PullRequestFile>();
             return Task.FromResult(files);
+        }
+
+        public Task<IReadOnlyList<PullRequestReview>> GetPullRequestReviews(int number)
+        {
+            var reviews = ReadResource<IReadOnlyList<PullRequestReview>>(number.ToString(), "pullrequest-reviews.json") ?? new List<PullRequestReview>();
+            return Task.FromResult(reviews);
         }
 
         public Task<PullRequestMerge> MergePullRequest(int number, MergePullRequest request)
@@ -87,11 +96,18 @@ namespace Hyponome.Server.Services
             throw new System.NotImplementedException();
         }
 
-        T ReadResource<T>(params string[] paths)
+        private static T ReadResource<T>(params string[] paths) where T : class
         {
-            return new Octokit.Internal.SimpleJsonSerializer()
-                .Deserialize<T>(File.ReadAllText(
-                    Path.Combine(Directory.GetCurrentDirectory(), "sample-data", Path.Combine(paths))));
+            try
+            {
+                return new SimpleJsonSerializer()
+                    .Deserialize<T>(File.ReadAllText(
+                        Path.Combine(Directory.GetCurrentDirectory(), "sample-data", Path.Combine(paths))));
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

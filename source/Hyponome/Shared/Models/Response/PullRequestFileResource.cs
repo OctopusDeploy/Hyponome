@@ -11,16 +11,18 @@ namespace Hyponome.Shared.Models.Response
         [JsonConstructor]
         public PullRequestFileResource() { }
 
-        public PullRequestFileResource(string fileName, string sha)
+        public PullRequestFileResource(string fileName, string sha, string patch)
         {
             FileName = fileName;
             Sha = sha;
+            Patch = patch;
         }
 
         public string FileName { get; set; }
         public string Sha { get; set; }
+        public string Patch { get; set; }
 
-        public static implicit operator PullRequestFileResource(PullRequestFile file) =>
-            new PullRequestFileResource(file.FileName, file.Sha);
+//        public static implicit operator PullRequestFileResource(PullRequestFile file) =>
+//            new PullRequestFileResource(file.FileName, file.Sha, file.Patch);
     }
 }

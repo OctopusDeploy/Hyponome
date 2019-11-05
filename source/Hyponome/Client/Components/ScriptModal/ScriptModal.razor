@@ -1,0 +1,27 @@
+@inherits ScriptModalBase
+@using Hyponome.Client.Components.Ace
+@using Hyponome.Client.Components.ScriptViewer
+@using Hyponome.Client.Components.ScriptValidation
+
+@if (ShouldRender())
+{
+    <div class="float-right">
+        <button type="button" data-toggle="modal" data-target="#scriptModal_@(File.Sha)" class="btn btn-link text-decoration-none">
+            @if (ScriptValidationInProgress)
+            {
+                <div class="spinner-border spinner-border-sm text-info" role="status" data-toggle="tooltip" data-placement="bottom" title="Validating script">
+                    <span class="sr-only">Valdating script body...</span>
+                </div>
+            }
+            else
+            {
+                <div class="d-inline-block @(ScriptValidationSucceeded ? "text-success" : "text-warning")" data-toggle="tooltip" data-placement="bottom" data-html="true" title="@(ScriptValidationSucceeded ? "Script is valid" : "Script has errors").<br/>Click to view.">
+                    <i class="fas fa-@(ScriptValidationSucceeded ? "check" : "exclamation")-circle"></i>
+                </div>
+            }
+        </button>
+    </div>
+    <CascadingValue Value=@this>
+        <ScriptDialog/>
+    </CascadingValue>
+}

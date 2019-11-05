@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -13,9 +13,259 @@
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.0.0-preview9.19465.2" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.0.0-preview9.19465.2" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.DevServer" Version="3.0.0-preview9.19465.2" PrivateAssets="all" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Octokit" Version="0.36.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shared\Hyponome.Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Components\AceEditor\AceEditor.razor.cs">
+      <DependentUpon>AceEditor.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\Moment\FromNow.razor.cs">
+      <DependentUpon>FromNow.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\PullRequests\PullRequestItem.razor.cs">
+      <DependentUpon>PullRequestItem.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\PullRequests\PullRequestList.razor.cs">
+      <DependentUpon>PullRequestList.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\PullRequests\PullRequestListItem.razor.cs">
+      <DependentUpon>PullRequestListItem.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\Index.razor.cs">
+      <DependentUpon>Index.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\PullRequest.razor.cs">
+      <DependentUpon>PullRequest.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\ScriptDialog\ScriptModal.razor.cs">
+      <DependentUpon>ScriptModal.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\Ace\AceDiff.razor.cs">
+      <DependentUpon>AceDiff.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\ScriptModal\ScriptModal.razor.cs">
+      <DependentUpon>ScriptModal.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\ScriptViewer\ScriptViewer.razor.cs">
+      <DependentUpon>ScriptViewer.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\ScriptValidation\ValidationDetails.razor.cs">
+      <DependentUpon>ValidationResult.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\ScriptModal\ScriptDialog.razor.cs">
+      <DependentUpon>ScriptDialog.razor</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\alert.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\archive.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\arrow-both.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\arrow-down.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\arrow-left.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\arrow-right.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\arrow-small-down.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\arrow-small-left.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\arrow-small-right.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\arrow-small-up.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\arrow-up.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\beaker.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\bell.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\bold.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\book.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\bookmark.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\briefcase.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\broadcast.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\browser.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\bug.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\calendar.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\check.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\checklist.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\chevron-down.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\chevron-left.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\chevron-right.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\chevron-up.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\circle-slash.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\circuit-board.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\clippy.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\clock.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\cloud-download.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\cloud-upload.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\code.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\comment-discussion.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\comment.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\credit-card.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\dash.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\dashboard.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\database.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\dependent.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\desktop-download.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\device-camera-video.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\device-camera.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\device-desktop.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\device-mobile.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\diff-added.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\diff-ignored.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\diff-modified.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\diff-removed.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\diff-renamed.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\diff.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\ellipsis.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\eye-closed.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\eye.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\file-binary.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\file-code.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\file-directory.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\file-media.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\file-pdf.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\file-submodule.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\file-symlink-directory.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\file-symlink-file.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\file-zip.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\file.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\flame.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\fold-down.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\fold-up.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\fold.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\gear.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\gift.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\gist-secret.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\gist.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\git-branch.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\git-commit.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\git-compare.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\git-merge.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\git-pull-request.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\github-action.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\globe.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\grabber.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\graph.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\heart.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\history.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\home.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\horizontal-rule.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\hubot.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\inbox.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\info.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\issue-closed.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\issue-opened.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\issue-reopened.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\italic.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\jersey.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\kebab-horizontal.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\kebab-vertical.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\key.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\keyboard.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\law.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\light-bulb.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\link-external.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\link.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\list-ordered.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\list-unordered.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\location.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\lock.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\logo-gist.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\logo-github.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\mail-read.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\mail.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\mark-github.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\markdown.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\megaphone.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\mention.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\milestone.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\mirror.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\mortar-board.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\mute.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\no-newline.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\note.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\octoface.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\organization.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\package.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\paintcan.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\pencil.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\person.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\pin.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\play.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\plug.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\plus-small.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\plus.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\primitive-dot.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\primitive-square.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\project.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\pulse.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\question.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\quote.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\radio-tower.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\reply.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\repo-clone.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\repo-force-push.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\repo-forked.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\repo-pull.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\repo-push.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\repo-template-private.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\repo-template.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\repo.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\report.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\request-changes.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\rocket.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\rss.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\ruby.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\screen-full.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\screen-normal.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\search.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\server.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\settings.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\shield-check.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\shield-lock.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\shield-x.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\shield.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\sign-in.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\sign-out.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\skip.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\smiley.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\squirrel.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\star.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\stop.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\sync.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\tag.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\tasklist.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\telescope.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\terminal.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\text-size.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\three-bars.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\thumbsdown.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\thumbsup.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\tools.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\trashcan.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\triangle-down.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\triangle-left.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\triangle-right.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\triangle-up.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\unfold.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\unmute.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\unverified.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\verified.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\versions.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\watch.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\x.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\octicons\zap.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-brands-400.eot" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-brands-400.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-brands-400.ttf" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-brands-400.woff" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-brands-400.woff2" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-regular-400.eot" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-regular-400.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-regular-400.ttf" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-regular-400.woff" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-regular-400.woff2" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-solid-900.eot" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-solid-900.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-solid-900.ttf" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-solid-900.woff" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\webfonts\fa-solid-900.woff2" />
   </ItemGroup>
 </Project>

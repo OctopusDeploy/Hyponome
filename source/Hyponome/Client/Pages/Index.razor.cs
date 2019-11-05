@@ -8,7 +8,7 @@ namespace Hyponome.Client.Pages
 {
     public class IndexBase : ComponentBase
     {
-        public IEnumerable<IssueResource> PullRequests;
+        protected IEnumerable<IssueResource> PullRequests;
 
         [Inject] private HttpClient Http { get; set; }
 

@@ -7,11 +7,10 @@ namespace Hyponome.Client.Pages
 {
     public class PullRequestBase : ComponentBase
     {
-        [Parameter]
-        public int Number { get; set; }
+        [Parameter] public int Number { get; set; }
         [Inject] private HttpClient Http { get; set; }
 
-        public PullRequestResource PullRequest;
+        protected PullRequestResource PullRequest;
 
         protected override async Task OnInitializedAsync() =>
             PullRequest = await Http.GetJsonAsync<PullRequestResource>($"api/pulls/{Number}");

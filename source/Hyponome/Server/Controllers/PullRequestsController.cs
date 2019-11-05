@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Threading.Tasks;
 using Hyponome.Server.Services;
 using Hyponome.Shared.Models.Response;
 using Microsoft.AspNetCore.Mvc;
+using Octokit;
 
 namespace Hyponome.Server.Controllers
 {
@@ -23,9 +25,8 @@ namespace Hyponome.Server.Controllers
         public async Task<IActionResult> Index()
         {
             var pullRequests = (await githubClientService.GetPullRequests()).ToArray();
-            Console.WriteLine("[Pulls] Found {0} open pull requests!", pullRequests.Count());
             
-            return Ok(pullRequests.Select(pr => new IssueResource(pr.Number, pr.Title, pr.CreatedAt, pr.User, pr.Comments, pr.Milestone)));
+            return Ok(pullRequests.Select(IssueResource.FromResponseModel));
         }
 
         [Route("{number:int}")]
@@ -37,8 +38,10 @@ namespace Hyponome.Server.Controllers
                 return NotFound();
             }
 
+            var reviews = await githubClientService.GetPullRequestReviews(number);
             var files = await githubClientService.GetPullRequestFiles(number);
-            return Ok(PullRequestResource.FromModel(pullRequest, files));
+
+            return Ok(PullRequestResource.FromResponseModel(pullRequest, reviews, files));
         }
     }
 }

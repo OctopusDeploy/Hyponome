@@ -121,7 +121,22 @@
       "site_admin": false
     },
     "labels": [
-
+      {
+        "id": 136086765,
+        "node_id": "MDU6TGFiZWwxMzYwODY3NjU=",
+        "url": "https://api.github.com/repos/OctopusDeploy/Library/labels/changes-requested",
+        "name": "changes-requested",
+        "color": "fbca04",
+        "default": false
+      },
+      {
+        "id": 631072846,
+        "node_id": "MDU6TGFiZWw2MzEwNzI4NDY=",
+        "url": "https://api.github.com/repos/OctopusDeploy/Library/labels/cla-signed",
+        "name": "cla-signed",
+        "color": "0e8a16",
+        "default": false
+      }
     ],
     "state": "open",
     "locked": false,
