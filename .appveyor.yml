@@ -16,7 +16,7 @@ install:
 before_build:
   - pwsh: dotnet --version
   - pwsh: dotnet restore source/Hyponome.sln
-  - pwsh: gitversion /l console /output buildserver /updateAssemblyInfo
+  - ps: gitversion /l console /output buildserver /updateAssemblyInfo
   - pwsh: Update-AppveyorBuild -Version "$env:GitVersion_FullSemVer"
 
 build:
