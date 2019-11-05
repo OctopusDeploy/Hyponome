@@ -15,6 +15,6 @@ namespace Hyponome.Shared.Models.Response
 
         public string Title { get; set; }
 
-        public static implicit operator MilestoneResource(Milestone milestone) => new MilestoneResource(milestone.Title);
+        public static implicit operator MilestoneResource(Milestone milestone) => new MilestoneResource(milestone?.Title);
     }
 }

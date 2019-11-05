@@ -18,6 +18,6 @@ namespace Hyponome.Shared.Models.Response
 
         public string Label { get; set; }
 
-        public static implicit operator GitReferenceResource(GitReference @ref) => new GitReferenceResource(@ref.Label);
+        public static implicit operator GitReferenceResource(GitReference @ref) => new GitReferenceResource(@ref?.Label);
     }
 }

@@ -65,8 +65,8 @@ namespace Hyponome.Shared.Models.Response
                 pullRequest.Additions,
                 pullRequest.Deletions,
                 pullRequest.Comments,
-                pullRequest.Labels.Select(l => new LabelResource(l.Name, l.Color, l.Description)).ToList(),
-                reviews.Select(r => new PullRequestReviewResource(r.State.StringValue)).ToList(),
-                files.Select(f => new PullRequestFileResource(f.FileName, f.Sha, f.Patch)).ToList());
+                pullRequest.Labels?.Select(l => new LabelResource(l.Name, l.Color, l.Description)).ToList(),
+                reviews?.Select(r => new PullRequestReviewResource(r.State.StringValue)).ToList(),
+                files?.Select(f => new PullRequestFileResource(f.FileName, f.Sha, f.Patch)).ToList());
     }
 }

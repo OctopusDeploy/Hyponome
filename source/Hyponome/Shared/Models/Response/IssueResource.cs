@@ -38,7 +38,7 @@ namespace Hyponome.Shared.Models.Response
                 pr.CreatedAt, 
                 pr.User, 
                 pr.Comments, 
-                pr.Milestone,
+                pr?.Milestone,
                 pr.Labels.Select(l => new LabelResource(l.Name, l.Color, l.Description)).ToList()
             );
         }

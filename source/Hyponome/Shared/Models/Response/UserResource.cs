@@ -17,6 +17,6 @@ namespace Hyponome.Shared.Models.Response
         public string Login { get; set; }
         public string HtmlUrl { get; set; }
 
-        public static implicit operator UserResource(User user) => new UserResource(user.Login, user.HtmlUrl);
+        public static implicit operator UserResource(User user) => new UserResource(user?.Login, user?.HtmlUrl);
     }
 }
