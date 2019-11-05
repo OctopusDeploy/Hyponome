@@ -13,6 +13,15 @@ init:
 install:
   - choco install gitversion.portable -pre -y
 
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '$env:GitVersion_NuGetVersion'
+  package_version: '$env:GitVersion_NuGetVersion'
+  assembly_version: '$env:GitVersion_AssemblySemVer'
+  file_version: '$env:GitVersion_NuGetVersion'
+  informational_version: '$env:GitVersion_InformationalVersion'
+
 before_build:
   - pwsh: dotnet --version
   - pwsh: dotnet restore source/Hyponome.sln
