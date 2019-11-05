@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -35,6 +36,7 @@ namespace Hyponome.Server.Services
 
         public Task<PullRequest> GetPullRequest(int number)
         {
+            Thread.Sleep(5000);
             var pullRequest = ReadResource<PullRequest>(number.ToString(), "pullrequest.json") ?? new PullRequest();
             return Task.FromResult(pullRequest);
         }

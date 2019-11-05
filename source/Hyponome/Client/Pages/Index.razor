@@ -5,13 +5,13 @@
 
 @inherits IndexBase
 
-@if (PullRequests == null)
-{
-    <Loading />
-}
-else
-{
-    <div class="container">
-        <PullRequestList PullRequests="PullRequests" />
-    </div>
-}
+<div class="container">
+    @if (PullRequests == null)
+    {
+        <Loading/>
+    }
+    else
+    {
+        <PullRequestList PullRequests="PullRequests"/>
+    }
+</div>

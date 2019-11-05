@@ -2,37 +2,35 @@
 @using Hyponome.Client.Components.Ace
 @using Hyponome.Client.Components.ScriptModal
 
-<div class="container">
-    <h4 class="mb-0">
-        @PullRequest.Title <small class="text-muted">#@PullRequest.Number</small>
-        <a href="@PullRequest.Url" target="_blank" class="btn btn-sm btn-outline-success align-top float-right" data-toggle="tooltip" title="Review and Merge PR on GitHub">Review and Merge</a>
-    </h4>
-    <small class="text-muted d-block">
-        <a href="@PullRequest.User.HtmlUrl" class="link-muted">@PullRequest.User.Login</a> wants to merge @PullRequest.Commits commit@(PullRequest.Commits == 1 ? "" : "s") into
-        <span class="badge badge-octopus">@PullRequest.Base.Label</span>
-        from
-        <span class="badge badge-octopus">@PullRequest.Head.Label</span>
-    </small>
-    <div class="accordion mt-2">
-        @foreach (var file in PullRequest.Files)
-        {
-            <div class="card">
-                <div class="card-header p-0" id="heading_@file.Sha">
-                    <p class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_@file.Sha" aria-expanded="true" aria-controls="collapse_@file.Sha">
-                            <small class="text-muted">
-                                <i class="far fa-file-code"></i> @file.FileName</small>
-                        </button>
-                        <ScriptModal File="@file"/>
-                    </p>
-                </div>
+<h4 class="mb-0">
+    @PullRequest.Title <small class="text-muted">#@PullRequest.Number</small>
+    <a href="@PullRequest.Url" target="_blank" class="btn btn-sm btn-outline-success align-top float-right" data-toggle="tooltip" title="Review and Merge PR on GitHub">Review and Merge</a>
+</h4>
+<small class="text-muted d-block">
+    <a href="@PullRequest.User.HtmlUrl" class="link-muted">@PullRequest.User.Login</a> wants to merge @PullRequest.Commits commit@(PullRequest.Commits == 1 ? "" : "s") into
+    <span class="badge badge-octopus">@PullRequest.Base.Label</span>
+    from
+    <span class="badge badge-octopus">@PullRequest.Head.Label</span>
+</small>
+<div class="accordion mt-2">
+    @foreach (var file in PullRequest.Files)
+    {
+        <div class="card">
+            <div class="card-header p-0" id="heading_@file.Sha">
+                <p class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_@file.Sha" aria-expanded="true" aria-controls="collapse_@file.Sha">
+                        <small class="text-muted">
+                            <i class="far fa-file-code"></i> @file.FileName</small>
+                    </button>
+                    <ScriptModal File="@file"/>
+                </p>
+            </div>
 
-                <div id="collapse_@file.Sha" class="collapse show" aria-labelledby="heading_@file.Sha">
-                    <div class="card-body p-0">
-                        <AceEditor Key="@file.Sha" Script="@file.Patch" Mode="diff"/>
-                    </div>
+            <div id="collapse_@file.Sha" class="collapse show" aria-labelledby="heading_@file.Sha">
+                <div class="card-body p-0">
+                    <AceEditor Key="@file.Sha" Script="@file.Patch" Mode="diff"/>
                 </div>
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>
