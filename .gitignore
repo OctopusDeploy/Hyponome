@@ -29,6 +29,9 @@ bld/
 # Visual Studo 2015 cache/options directory
 .vs/
 
+# Visual Studio Code cache/options directory
+.vscode/
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
@@ -93,6 +96,9 @@ $tf/
 _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
+
+# Rider options directory
+.idea/
 
 # JustCode is a .NET coding addin-in
 .JustCode
