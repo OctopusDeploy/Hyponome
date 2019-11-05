@@ -11,7 +11,7 @@ init:
   - git config --global core.autocrlf true
 
 install:
-  - choco install gitversion.portable --version=5.0.1 -y
+  - choco install gitversion.portable --version=4.0.0 -y
 
 before_build:
   - pwsh: dotnet --version
