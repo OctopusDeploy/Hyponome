@@ -1,22 +1,24 @@
 @inherits ValidationDetailsBase
 
-@if (Errors is null || !Errors.Any())
-{
-    <h6 class="text-white mb-0">
-        <i class="fas fa-check-circle"></i> Script validation was successful!
-    </h6>
-}
-else
-{
-    <div class="text-danger">
-        <h6><span class="fas fa-exclamation-circle"></span> Script validation failed!</h6>
-        <ul>
-            @foreach (var error in Errors)
-            {
-                <li>
-                    At line:@(error.Line); column:@(error.Column) - @error.Message
-                </li>
-            }
-        </ul>
-    </div>
-}
+<div class="alert alert-@(Errors is null || !Errors.Any() ? "success" : "warning") mb-0 p-1 rounded-0" role="alert">
+    @if (Errors is null || !Errors.Any())
+    {
+        <p class="mb-0">
+            <i class="fas fa-check-circle"></i> Script validation was successful!
+        </p>
+    }
+    else
+    {
+        <h6 class="alert-heading"><span class="fas fa-exclamation-circle"></span> Script validation failed!</h6>
+        <p class="mb-0">
+            <ul class="mb-0">
+                @foreach (var error in Errors)
+                {
+                    <li>
+                        At line:@(error.Line); column:@(error.Column) - @error.Message
+                    </li>
+                }
+            </ul>
+        </p>
+    }
+</div>

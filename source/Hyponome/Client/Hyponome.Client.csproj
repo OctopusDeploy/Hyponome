@@ -26,7 +26,7 @@
     <Compile Update="Components\Moment\FromNow.razor.cs">
       <DependentUpon>FromNow.razor</DependentUpon>
     </Compile>
-    <Compile Update="Components\PullRequests\PullRequestItem.razor.cs">
+    <Compile Update="Components\PullRequests\PullRequestDetails.razor.cs">
       <DependentUpon>PullRequestItem.razor</DependentUpon>
     </Compile>
     <Compile Update="Components\PullRequests\PullRequestList.razor.cs">
@@ -58,6 +58,9 @@
     </Compile>
     <Compile Update="Components\ScriptModal\ScriptDialog.razor.cs">
       <DependentUpon>ScriptDialog.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\Ace\AceEditor.razor.cs">
+      <DependentUpon>AceEditor.razor</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

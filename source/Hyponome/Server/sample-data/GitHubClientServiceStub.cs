@@ -36,7 +36,6 @@ namespace Hyponome.Server.Services
 
         public Task<PullRequest> GetPullRequest(int number)
         {
-            Thread.Sleep(5000);
             var pullRequest = ReadResource<PullRequest>(number.ToString(), "pullrequest.json") ?? new PullRequest();
             return Task.FromResult(pullRequest);
         }

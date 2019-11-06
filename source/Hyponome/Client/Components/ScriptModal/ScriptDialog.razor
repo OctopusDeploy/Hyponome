@@ -1,5 +1,4 @@
 @inherits ScriptDialogBase
-@using Hyponome.Client.Components.Ace
 @using Hyponome.Client.Components.ScriptViewer
 @using Hyponome.Client.Components.ScriptValidation
 
@@ -16,12 +15,12 @@
             </div>
             <div class="modal-body">
                 <ScriptViewer
-                    Scripts=@Parent.Scripts
-                    ScriptMode=@Parent.ScriptMode
-                    File=@Parent.File/>
+                    Scripts="@Parent.Scripts"
+                    ScriptMode="@Parent.ScriptMode"
+                    File="@Parent.File"/>
             </div>
             <div class="modal-footer justify-content-start p-2 @(!Parent.ScriptValidationInProgress ? Parent.ScriptValidationSucceeded ? "bg-success" : "bg-warning" : "")">
-                <ValidationDetails Errors=@Parent.ScriptErrors/>
+                <ValidationDetails Errors="@Parent.ScriptErrors"/>
             </div>
         </div>
     </div>
