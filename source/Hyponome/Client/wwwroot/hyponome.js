@@ -8,8 +8,8 @@
             editor.setReadOnly(true);
             editor.setOptions({ maxLines: Infinity });
         },
-        differ: (element, leftContent, rightContent, mode) => {
-            const differ = new AceDiff({
+        diff: (element, leftContent, rightContent, mode) => {
+            const aceDiff = new AceDiff({
                 element: element,
                 mode: `ace/mode/${mode}`,
                 theme: 'ace/theme/github',
@@ -24,7 +24,21 @@
                     editable: false,
                     copyLinkEnabled: false
                 }
-            })
+            });
+            const leftEditor = aceDiff.editors.left.ace;
+            const rightEditor = aceDiff.editors.right.ace;
+            leftEditor.getSession().on('changeScrollTop', (scrollTop) => {
+                const right = rightEditor.getSession();
+                if(right.getScrollTop() !== scrollTop) {
+                    right.setScrollTop(scrollTop);
+                }
+            });
+            rightEditor.getSession().on('changeScrollTop', (scrollTop) => {
+                const left = leftEditor.getSession();
+                if(left.getScrollTop() !== scrollTop) {
+                    left.setScrollTop(scrollTop);
+                }
+            });
         }
     },
     bootstrap: {

@@ -19,7 +19,7 @@ namespace Hyponome.Client.Components.Ace
         {
             if (firstRender)
             {
-                await new HyponomeInterop(JSRuntime).Ace.Differ(diffElement, Scripts[0], Scripts[1], Mode);
+                await new HyponomeInterop(JSRuntime).Ace.Diff(diffElement, Scripts[0], Scripts[1], Mode);
             }
         }
     }

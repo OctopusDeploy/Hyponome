@@ -18,9 +18,9 @@ namespace Hyponome.Client.Interop
             await jsRuntime.InvokeVoidAsync("hyponome.ace.editor", element, mode);
         }
 
-        public async ValueTask Differ(ElementReference element, string leftScript, string rightScript, string mode)
+        public async ValueTask Diff(ElementReference element, string leftScript, string rightScript, string mode)
         {
-            await jsRuntime.InvokeVoidAsync("hyponome.ace.differ", element, leftScript, rightScript, mode);
+            await jsRuntime.InvokeVoidAsync("hyponome.ace.diff", element, leftScript, rightScript, mode);
         }
     }
 }
