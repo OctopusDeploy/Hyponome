@@ -25,6 +25,22 @@
                     copyLinkEnabled: false
                 }
             });
+            const leftEditor = aceDiff.editors.left.ace;
+            const rightEditor = aceDiff.editors.right.ace;
+            leftEditor.getSession().on('changeScrollTop', (scrollTop) => {
+                const right = rightEditor.getSession();
+                if (leftEditor.getLastVisibleRow() <= rightEditor.getLastVisibleRow() && right.getScrollTop() < scrollTop ||
+                    scrollTop < right.getScrollTop()) {
+                    right.setScrollTop(scrollTop);
+                }
+            });
+            rightEditor.getSession().on('changeScrollTop', (scrollTop) => {
+                const left = leftEditor.getSession();
+                if (rightEditor.getLastVisibleRow() <= leftEditor.getLastVisibleRow() && left.getScrollTop() < scrollTop ||
+                    scrollTop < left.getScrollTop()) {
+                    left.setScrollTop(scrollTop);
+                }
+            });
         }
     },
     bootstrap: {
