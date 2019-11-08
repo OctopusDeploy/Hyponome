@@ -24,24 +24,21 @@ namespace Hyponome.Server.Controllers
         [Route("")]
         public async Task<IActionResult> Index()
         {
-            var pullRequests = (await githubClientService.GetPullRequests()).ToArray();
+            (PullRequest PullRequest, CombinedCommitStatus Status)[] pullRequests = (await githubClientService.GetPullRequests()).ToArray();
             
-            return Ok(pullRequests.Select(IssueResource.FromResponseModel));
+            return Ok(pullRequests.Select(pr => PullRequestResource.FromResponseModel(pr.PullRequest, null, null, pr.Status)));
         }
 
         [Route("{number:int}")]
         public async Task<IActionResult> PullRequest(int number)
         {
-            var pullRequest = await githubClientService.GetPullRequest(number);
+            var (pullRequest, files, reviews, statuses) = await githubClientService.GetPullRequest(number);
             if (pullRequest == null)
             {
                 return NotFound();
             }
 
-            var reviews = await githubClientService.GetPullRequestReviews(number);
-            var files = await githubClientService.GetPullRequestFiles(number);
-
-            return Ok(PullRequestResource.FromResponseModel(pullRequest, reviews, files));
+            return Ok(PullRequestResource.FromResponseModel(pullRequest, reviews, files, statuses));
         }
     }
 }

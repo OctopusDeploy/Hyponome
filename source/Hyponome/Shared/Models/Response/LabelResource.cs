@@ -12,13 +12,13 @@ namespace Hyponome.Shared.Models.Response
         {
             Name = name;
             BackgroundColor = backgroundColor;
-            TextColor = PickTextColorBasedOnBgColor(backgroundColor);
+            TextColorClass = PickTextColorBasedOnBgColor(backgroundColor);
             Description = description;
         }
         
         public string Name { get; set; }
         public string BackgroundColor { get; set; }
-        public string TextColor { get; set; }
+        public string TextColorClass { get; set; }
         public string Description { get; set; }
         
         private const string DarkColor = "text-body";

@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Hyponome.Server.Utils;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Octokit;
@@ -18,10 +22,11 @@ namespace Hyponome.Server.Services
         Task<bool> IsCollaborator(string user);
         Task<IReadOnlyList<Organization>> GetOrganizations();
         Task<IReadOnlyList<Repository>> GetRepositories();
-        Task<IEnumerable<Issue>> GetPullRequests();
-        Task<PullRequest> GetPullRequest(int number);
+        Task<IReadOnlyList<(PullRequest, CombinedCommitStatus)>> GetPullRequests();
+        Task<(PullRequest, IReadOnlyList<PullRequestFile>, IReadOnlyList<PullRequestReview>, CombinedCommitStatus)> GetPullRequest(int number);
         Task<IReadOnlyList<PullRequestFile>> GetPullRequestFiles(int number);
         Task<IReadOnlyList<PullRequestReview>> GetPullRequestReviews(int number);
+        Task<CombinedCommitStatus> GetPullRequestStatuses(string sha);
         Task<PullRequestMerge> MergePullRequest(int number, MergePullRequest request);
         Task<IReadOnlyList<Milestone>> GetMilestones();
         Task<Milestone> GetMilestone(string milestone);
@@ -32,12 +37,13 @@ namespace Hyponome.Server.Services
     {
         readonly ILogger<GitHubClientService> logger;
         readonly GitHubClient githubClient;
+        private readonly string version = typeof(GitHubClientService).Assembly.GetFileVersion();
 
         public GitHubClientService(ILogger<GitHubClientService> logger, IOptions<GitHubOptions> optionsAccessor)
         {
             this.logger = logger;
             Options = optionsAccessor.Value;
-            githubClient = new GitHubClient(new ProductHeaderValue("Hyponome", "2.0"));
+            githubClient = new GitHubClient(new ProductHeaderValue("Hyponome", version));
         }
 
         GitHubOptions Options { get; }
@@ -82,17 +88,22 @@ namespace Hyponome.Server.Services
             return await githubClient.Repository.GetAllForOrg(Options.OrganizationName);
         }
 
-        public async Task<IEnumerable<Issue>> GetPullRequests()
+        public async Task<IReadOnlyList<(PullRequest, CombinedCommitStatus)>> GetPullRequests()
         {
             var issues = await githubClient.Issue.GetAllForRepository(Options.OrganizationName, Options.RepositoryName);
-            var pulls = issues.Where(i => i.PullRequest != null);
-            return pulls.ToList();
+            IEnumerable<(PullRequest PullRequest, IReadOnlyList<PullRequestFile>, IReadOnlyList<PullRequestReview>, CombinedCommitStatus Status)> pullRequestDetails = issues.Where(i => i.PullRequest != null).Select(pr => GetPullRequest(pr.Number).Result);
+            
+            return pullRequestDetails.Select(pr => (pr.PullRequest, pr.Status)).ToList();
         }
 
-        public async Task<PullRequest> GetPullRequest(int number)
+        public async Task<(PullRequest, IReadOnlyList<PullRequestFile>, IReadOnlyList<PullRequestReview>, CombinedCommitStatus)> GetPullRequest(int number)
         {
-            var pullRequest = CurrentPullRequest = await githubClient.PullRequest.Get(Options.OrganizationName, Options.RepositoryName, number);
-            return pullRequest;
+            var pullRequest = await githubClient.PullRequest.Get(Options.OrganizationName, Options.RepositoryName, number);
+            var files = await GetPullRequestFiles(number);
+            var reviews = await GetPullRequestReviews(number);
+            var statuses = await GetPullRequestStatuses(pullRequest.Head.Sha);
+                
+            return (pullRequest, files, reviews, statuses);
         }
 
         public async Task<IReadOnlyList<PullRequestFile>> GetPullRequestFiles(int number)
@@ -103,6 +114,11 @@ namespace Hyponome.Server.Services
         public async Task<IReadOnlyList<PullRequestReview>> GetPullRequestReviews(int number)
         {
             return await githubClient.PullRequest.Review.GetAll(Options.OrganizationName, Options.RepositoryName, number);
+        }
+
+        public async Task<CombinedCommitStatus> GetPullRequestStatuses(string sha)
+        {
+            return await githubClient.Repository.Status.GetCombined(Options.OrganizationName, Options.RepositoryName, sha); 
         }
 
         public async Task<PullRequestMerge> MergePullRequest(int number, MergePullRequest request)

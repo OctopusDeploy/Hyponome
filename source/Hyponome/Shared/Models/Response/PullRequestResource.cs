@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Octokit;
@@ -13,6 +14,7 @@ namespace Hyponome.Shared.Models.Response
         public PullRequestResource(
             int number, 
             string title, 
+            DateTimeOffset created,
             string url,
             UserResource user, 
             int commits,
@@ -22,12 +24,15 @@ namespace Hyponome.Shared.Models.Response
             int additions,
             int deletions,
             int comments,
+            MilestoneResource milestone,
             IReadOnlyList<LabelResource> labels,
             IReadOnlyList<PullRequestReviewResource> reviews,
-            IReadOnlyList<PullRequestFileResource> files)
+            IReadOnlyList<PullRequestFileResource> files,
+            CombinedCommitStatusResource statuses)
         {
             Number = number;
             Title = title;
+            Created = created;
             Url = url;
             User = user;
             Commits = commits;
@@ -36,10 +41,12 @@ namespace Hyponome.Shared.Models.Response
             ChangedFiles = changedFiles;
             Additions = additions;
             Deletions = deletions;
+            Milestone = milestone;
             Comments = comments;
             Labels = labels;
             Reviews = reviews;
             Files = files;
+            Statuses = statuses;
         }
 
         public string Url { get; set; }
@@ -51,11 +58,14 @@ namespace Hyponome.Shared.Models.Response
         public int Deletions { get; set; }
         public IReadOnlyList<PullRequestReviewResource> Reviews { get; set; }
         public IReadOnlyList<PullRequestFileResource> Files { get; set; }
+        
+        public CombinedCommitStatusResource Statuses { get; set; }
 
-        public static PullRequestResource FromResponseModel(PullRequest pullRequest, IReadOnlyList<PullRequestReview> reviews, IReadOnlyList<PullRequestFile> files) => 
+        public static PullRequestResource FromResponseModel(PullRequest pullRequest, IReadOnlyList<PullRequestReview> reviews, IReadOnlyList<PullRequestFile> files, CombinedCommitStatus statuses) => 
             new PullRequestResource(
                 pullRequest.Number,
                 pullRequest.Title,
+                pullRequest.CreatedAt,
                 pullRequest.HtmlUrl,
                 pullRequest.User,
                 pullRequest.Commits,
@@ -65,8 +75,10 @@ namespace Hyponome.Shared.Models.Response
                 pullRequest.Additions,
                 pullRequest.Deletions,
                 pullRequest.Comments,
+                pullRequest.Milestone,
                 pullRequest.Labels?.Select(l => new LabelResource(l.Name, l.Color, l.Description)).ToList(),
                 reviews?.Select(r => new PullRequestReviewResource(r.State.StringValue)).ToList(),
-                files?.Select(f => new PullRequestFileResource(f.FileName, f.Sha, f.Patch)).ToList());
+                files?.Select(f => new PullRequestFileResource(f.FileName, f.Sha, f.Patch, f.RawUrl)).ToList(),
+                statuses);
     }
 }
