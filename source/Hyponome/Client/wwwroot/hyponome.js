@@ -27,19 +27,19 @@
             });
             const leftEditor = aceDiff.editors.left.ace;
             const rightEditor = aceDiff.editors.right.ace;
-            leftEditor.getSession().on('changeScrollTop', (scrollTop) => {
-                const right = rightEditor.getSession();
-                if (leftEditor.getLastVisibleRow() <= rightEditor.getLastVisibleRow() && right.getScrollTop() < scrollTop ||
-                    scrollTop < right.getScrollTop()) {
-                    right.setScrollTop(scrollTop);
+            const syncScrollTop = (scrollTop, origin, target) => {
+                const targetSession = target.getSession();
+                if(origin.getLastVisibleRow() <= target.getLastVisibleRow() && targetSession.getScrollTop() < scrollTop ||
+                scrollTop < targetSession.getScrollTop()) {
+                    targetSession.setScrollTop(scrollTop);
                 }
+            }
+
+            leftEditor.getSession().on('changeScrollTop', (scrollTop) => {
+                syncScrollTop(scrollTop, leftEditor, rightEditor);
             });
             rightEditor.getSession().on('changeScrollTop', (scrollTop) => {
-                const left = leftEditor.getSession();
-                if (rightEditor.getLastVisibleRow() <= leftEditor.getLastVisibleRow() && left.getScrollTop() < scrollTop ||
-                    scrollTop < left.getScrollTop()) {
-                    left.setScrollTop(scrollTop);
-                }
+                syncScrollTop(scrollTop, rightEditor, leftEditor);
             });
         }
     },
