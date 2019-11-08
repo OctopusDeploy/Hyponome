@@ -25,20 +25,6 @@
                     copyLinkEnabled: false
                 }
             });
-            const leftEditor = aceDiff.editors.left.ace;
-            const rightEditor = aceDiff.editors.right.ace;
-            leftEditor.getSession().on('changeScrollTop', (scrollTop) => {
-                const right = rightEditor.getSession();
-                if(right.getScrollTop() !== scrollTop) {
-                    right.setScrollTop(scrollTop);
-                }
-            });
-            rightEditor.getSession().on('changeScrollTop', (scrollTop) => {
-                const left = leftEditor.getSession();
-                if(left.getScrollTop() !== scrollTop) {
-                    left.setScrollTop(scrollTop);
-                }
-            });
         }
     },
     bootstrap: {
