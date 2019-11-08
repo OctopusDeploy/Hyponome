@@ -13,7 +13,7 @@
                 element: element,
                 mode: `ace/mode/${mode}`,
                 theme: 'ace/theme/github',
-                showConnectors: false,
+                showConnectors: true,
                 left: {
                     content: leftContent,
                     editable: false,
