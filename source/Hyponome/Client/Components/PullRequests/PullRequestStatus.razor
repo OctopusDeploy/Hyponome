@@ -1,0 +1,10 @@
+@inherits PullRequestStatusBase
+
+@if (ShouldRender())
+{
+    <div class="d-inline-block" role="status" data-toggle="tooltip" data-placement="right" title="@($"{Status.Statuses?.Count(s => s.State.Equals("success", StringComparison.OrdinalIgnoreCase))}/{Status.TotalCount} checks OK")">
+        <span class="text-@GetStatusColorClass(Status.State)">
+            <i class="fas fa-@(GetStatusIcon(Status.State))"></i>
+        </span>
+    </div>
+}

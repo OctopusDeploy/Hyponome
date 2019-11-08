@@ -8,11 +8,11 @@ namespace Hyponome.Client.Pages
 {
     public class IndexBase : ComponentBase
     {
-        protected IEnumerable<IssueResource> PullRequests;
+        protected IReadOnlyList<PullRequestResource> PullRequests;
 
         [Inject] private HttpClient Http { get; set; }
 
         protected override async Task OnInitializedAsync() =>
-            PullRequests = await Http.GetJsonAsync<IEnumerable<IssueResource>>("api/pulls");
+            PullRequests = await Http.GetJsonAsync<IReadOnlyList<PullRequestResource>>("api/pulls");
     }
 }

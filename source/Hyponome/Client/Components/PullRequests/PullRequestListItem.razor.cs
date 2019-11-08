@@ -7,7 +7,7 @@ namespace Hyponome.Client.Components.PullRequests
 {
     public class PullRequestListItemBase : ComponentBase
     {
-        [Parameter] public IssueResource PullRequest { get; set; }
+        [Parameter] public PullRequestResource PullRequest { get; set; }
 
         protected override void OnParametersSet()
         {

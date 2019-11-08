@@ -6,6 +6,6 @@ namespace Hyponome.Client.Components.PullRequests
 {
     public class PullRequestListBase : ComponentBase
     {
-        [Parameter] public IEnumerable<IssueResource> PullRequests { get; set; }
+        [Parameter] public IReadOnlyList<PullRequestResource> PullRequests { get; set; }
     }
 }

@@ -27,7 +27,7 @@
       <DependentUpon>FromNow.razor</DependentUpon>
     </Compile>
     <Compile Update="Components\PullRequests\PullRequestDetails.razor.cs">
-      <DependentUpon>PullRequestItem.razor</DependentUpon>
+      <DependentUpon>PullRequestDetails.razor</DependentUpon>
     </Compile>
     <Compile Update="Components\PullRequests\PullRequestList.razor.cs">
       <DependentUpon>PullRequestList.razor</DependentUpon>
@@ -47,20 +47,23 @@
     <Compile Update="Components\Ace\AceDiff.razor.cs">
       <DependentUpon>AceDiff.razor</DependentUpon>
     </Compile>
-    <Compile Update="Components\ScriptModal\ScriptModal.razor.cs">
-      <DependentUpon>ScriptModal.razor</DependentUpon>
-    </Compile>
     <Compile Update="Components\ScriptViewer\ScriptViewer.razor.cs">
       <DependentUpon>ScriptViewer.razor</DependentUpon>
     </Compile>
     <Compile Update="Components\ScriptValidation\ValidationDetails.razor.cs">
-      <DependentUpon>ValidationResult.razor</DependentUpon>
-    </Compile>
-    <Compile Update="Components\ScriptModal\ScriptDialog.razor.cs">
-      <DependentUpon>ScriptDialog.razor</DependentUpon>
+      <DependentUpon>ValidationDetails.razor</DependentUpon>
     </Compile>
     <Compile Update="Components\Ace\AceEditor.razor.cs">
       <DependentUpon>AceEditor.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\PullRequests\PullRequestStatus.razor.cs">
+      <DependentUpon>PullRequestStatus.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\PullRequests\PullRequestFiles.razor.cs">
+      <DependentUpon>PullRequestFiles.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Components\PullRequests\PullRequestLabels.razor.cs">
+      <DependentUpon>PullRequestLabels.razor</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

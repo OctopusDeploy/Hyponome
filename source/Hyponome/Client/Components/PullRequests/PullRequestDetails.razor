@@ -1,8 +1,4 @@
 ﻿@inherits PullRequestDetailsBase
-@using Hyponome.Client.Components.Ace
-@using Hyponome.Client.Components.ScriptViewer
-@using Hyponome.Client.Components.ScriptValidation
-@using Hyponome.Client.Utils
 
 <h4 class="mb-0">
     @PullRequest.Title <small class="text-muted">#@PullRequest.Number</small>
@@ -15,44 +11,5 @@
     <span class="badge badge-octopus">@PullRequest.Head.Label</span>
 </small>
 <div class="accordion my-2">
-    @foreach (var file in PullRequest.Files)
-    {
-        <div class="card">
-            <div class="card-header p-0" id="heading_@file.Sha">
-                <p class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_@file.Sha" aria-expanded="true" aria-controls="collapse_@file.Sha">
-                        <small class="text-muted">
-                            <i class="far fa-file-code"></i> @file.FileName</small>
-                    </button>
-                    @if (ScriptHelper.HasScript(file.Patch))
-                    {
-                        if (ScriptValidationInProgress)
-                        {
-                            <div class="spinner-border spinner-border-sm text-info" role="status" data-toggle="tooltip" data-placement="bottom" title="Validating script">
-                                <span class="sr-only">Valdating script body...</span>
-                            </div>
-                        }
-                        <button class="btn btn-link btn-sm float-right" @onclick=@(() => ShowScript = !ShowScript)>View @(ShowScript ? "file" : "script")</button>
-                    }
-                </p>
-            </div>
-
-            <div id="collapse_@file.Sha" class="collapse show" aria-labelledby="heading_@file.Sha">
-                <CascadingValue Value="@this">
-                    @if (ShowScript)
-                    {
-                        if (ScriptHelper.HasScript(file.Patch) && !ScriptValidationInProgress)
-                        {
-                            <ValidationDetails Errors="@GetScriptErrorsForFile(file.Sha)"/>
-                        }
-                        <ScriptViewer File="@file"/>
-                    }
-                    else
-                    {
-                        <AceEditor Key="@file.Sha" Script="@file.Patch" Mode="diff"/>
-                    }
-                </CascadingValue>
-            </div>
-        </div>
-    }
+    <PullRequestFiles Files="@PullRequest.Files" />
 </div>

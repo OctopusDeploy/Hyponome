@@ -6,15 +6,8 @@
         <div class="card-body p-2">
             <h6 class="card-title mb-0">
                 <a href="@PullRequest.Number" class="issue-title-link">@PullRequest.Title</a>
-                @if (PullRequest.Labels != null && PullRequest.Labels.Any())
-                {
-                    <small>
-                        @foreach (var label in PullRequest.Labels)
-                        {
-                            <span class="badge @label.BackgroundColor" style="background-color: @($"#{label.BackgroundColor}")">@label.Name</span>
-                        }
-                    </small>
-                }
+                <PullRequestStatus Status="@PullRequest.Statuses"/>
+                <PullRequestLabels Labels="@PullRequest.Labels"/>
             </h6>
             <p class="card-text">
                 <small class="text-muted">

@@ -14,7 +14,7 @@ namespace Hyponome.Client.Components.ScriptViewer
     {
         [Inject] public HttpClient HttpClient { get; set; }
         
-        [CascadingParameter] public PullRequestDetailsBase Parent { get; set; }
+        [CascadingParameter] public PullRequestFilesBase Parent { get; set; }
         
         [Parameter] public IList<string> Scripts { get; set; }
         [Parameter] public string ScriptMode { get; set; }

@@ -1,0 +1,11 @@
+@inherits PullRequestLabelsBase
+
+@if (ShouldRender())
+{
+    <small>
+        @foreach (var label in Labels)
+        {
+            <span class="badge @label.TextColorClass" style="background-color: @($"#{label.BackgroundColor}")">@label.Name</span>
+        }
+    </small>
+}
