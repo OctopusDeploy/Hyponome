@@ -43,7 +43,9 @@ namespace Hyponome.Server.Services
         {
             this.logger = logger;
             Options = optionsAccessor.Value;
-            githubClient = new GitHubClient(new ProductHeaderValue("Hyponome", version));
+            githubClient = new GitHubClient(new ProductHeaderValue(Options.OAuthApp, version));
+            if (!string.IsNullOrEmpty(Options.AuthToken))
+                githubClient.Credentials = new Credentials(Options.AuthToken);
         }
 
         GitHubOptions Options { get; }

@@ -14,5 +14,6 @@ namespace Hyponome.Server.Services
         public string RepositoryName { get; set; }
         public string OAuthClientId { get; set; }
         public string OAuthClientSecret { get; set; }
+        public string AuthToken { get; set; }
     }
 }
