@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Hyponome.Web.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 
 namespace Hyponome.Web
 {
@@ -20,13 +21,12 @@ namespace Hyponome.Web
         {
             services.Configure<GitHubOptions>(Configuration.GetSection("GitHub"));
             services.AddSingleton(typeof(IGitHubClientService), typeof(GitHubClientService));
-            services.AddMvc();
+            services.AddMvc(x => x.EnableEndpointRouting = false);
+            services.AddLogging(builder => builder.AddConsole().AddFilter(level => level >= LogLevel.Warning));
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(minLevel: LogLevel.Warning);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
