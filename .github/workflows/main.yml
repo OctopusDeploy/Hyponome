@@ -43,8 +43,11 @@ jobs:
           dotnet restore src/Hyponome.sln
           dotnet build src/Hyponome.sln
           dotnet publish src/Hyponome.sln -o ../../publish
-          cd ../../publish
+          pushd ../../publish
           zip -r Hyponome.Web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip .
+          popd
+          cd azure
+          zip -r Hyponome.Azure.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip .
 
       - name: GitHub Tag 🏷
         id: github-tag
@@ -69,7 +72,9 @@ jobs:
         uses: OctopusDeploy/push-package-action@v1.1.1
         with:
           api_key: ${{ secrets.OCTOPUS_API_KEY }}
-          packages: ../../publish/Hyponome.Web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip
+          packages: |
+            ../../publish/Hyponome.Web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip
+            ../../publish/Hyponome.Azure.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip
           server: ${{ secrets.OCTOPUS_SERVER }}
 
       - name: 🐙 Create a release in Octopus Deploy
