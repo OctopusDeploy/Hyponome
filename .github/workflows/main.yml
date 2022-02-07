@@ -43,7 +43,8 @@ jobs:
           dotnet restore src/Hyponome.sln
           dotnet build src/Hyponome.sln
           dotnet publish src/Hyponome.sln -o ../../publish
-          zip -r Hyponome.Web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip ../../publish
+          cd ../../publish
+          zip -r Hyponome.Web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip .
 
       - name: GitHub Tag 🏷
         id: github-tag
