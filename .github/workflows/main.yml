@@ -8,7 +8,7 @@ on:
       - '**'
     tags-ignore:
       - '**'
-    # Allows you to run this workflow manually from the Actions tab
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -43,7 +43,7 @@ jobs:
           dotnet restore src/Hyponome.sln
           dotnet build src/Hyponome.sln
           dotnet publish src/Hyponome.sln -o ../../publish
-          zip -r hyponome.web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip ../../publish
+          zip -r Hyponome.Web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip ../../publish
 
       - name: GitHub Tag 🏷
         id: github-tag
@@ -68,14 +68,14 @@ jobs:
         uses: OctopusDeploy/push-package-action@v1.1.1
         with:
           api_key: ${{ secrets.OCTOPUS_API_KEY }}
-          packages: hyponome.web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip
+          packages: ../../publish/Hyponome.Web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip
           server: ${{ secrets.OCTOPUS_SERVER }}
 
       - name: 🐙 Create a release in Octopus Deploy
         uses: OctopusDeploy/create-release-action@v1.1.1
         with:
           api_key: ${{ secrets.OCTOPUS_API_KEY }}
-          project: 'Water Tank Sensor'
+          project: 'Hyponome'
           server: ${{ secrets.OCTOPUS_SERVER }}
           release_number: ${{ steps.calculate_version.outputs.octoversion_fullsemver }}
-          packages: hyponome.web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip
+          packages: ../../publish/Hyponome.Web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip
