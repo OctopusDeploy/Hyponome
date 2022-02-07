@@ -55,7 +55,7 @@ jobs:
             github.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: "refs/tags/${{ steps.build.outputs.semver }}",
+              ref: "refs/tags/${{ steps.calculate_version.outputs.octoversion_fullsemver }}",
               sha: context.sha
             })
             
