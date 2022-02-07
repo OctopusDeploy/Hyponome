@@ -74,7 +74,7 @@ jobs:
           api_key: ${{ secrets.OCTOPUS_API_KEY }}
           packages: |
             ../../publish/Hyponome.Web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip
-            ../../publish/Hyponome.Azure.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip
+            Azure/Hyponome.Azure.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip
           server: ${{ secrets.OCTOPUS_SERVER }}
 
       - name: 🐙 Create a release in Octopus Deploy
