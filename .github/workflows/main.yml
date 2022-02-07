@@ -28,7 +28,7 @@ jobs:
         run: |
           dotnet new tool-manifest
           dotnet tool install OctoVersion.Tool
-    
+
       - name: Calculate Version
         id: calculate_version
         shell: bash
