@@ -207,3 +207,5 @@ bower_components/*
 
 # Definitely typed definitions
 typings/*
+
+src/.idea/
