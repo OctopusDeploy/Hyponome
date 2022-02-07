@@ -79,4 +79,4 @@ jobs:
           project: 'Hyponome'
           server: ${{ secrets.OCTOPUS_SERVER }}
           release_number: ${{ steps.calculate_version.outputs.octoversion_fullsemver }}
-          packages: ../../publish/Hyponome.Web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip
+          package_version: ${{ steps.calculate_version.outputs.octoversion_fullsemver }}
