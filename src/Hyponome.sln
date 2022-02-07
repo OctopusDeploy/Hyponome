@@ -8,7 +8,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{BF26C86D-397B-4B35-9069-88C5B9DF44A0}"
 	ProjectSection(SolutionItems) = preProject
 		..\global.json = ..\global.json
-		..\.appveyor.yml = ..\.appveyor.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure", "Azure", "{65B02B8B-5787-44F1-90FA-32B8F322475F}"
+	ProjectSection(SolutionItems) = preProject
+		..\Azure\parameters.json = ..\Azure\parameters.json
+		..\Azure\template.json = ..\Azure\template.json
 	EndProjectSection
 EndProject
 Global
