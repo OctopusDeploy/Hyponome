@@ -46,7 +46,7 @@ jobs:
           pushd ../../publish
           zip -r Hyponome.Web.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip .
           popd
-          cd azure
+          cd Azure
           zip -r Hyponome.Azure.${{ steps.calculate_version.outputs.octoversion_fullsemver }}.zip .
 
       - name: GitHub Tag 🏷
